@@ -1,7 +1,7 @@
 #ifndef CCARRO_H
 #define CCARRO_H
+
 #include <cstring>
-#include "constantes.h"
 
 class cCarro
 {
@@ -9,15 +9,15 @@ public:
     cCarro();
     cCarro(int anno, char *matricula);
 
-    void setMatricula(char *matricula)    { memcpy(m_matricula,matricula,6) ;    }
-    void setAnno(int anno)    {        m_anno = anno;    }
+    void setMatricula(char *matricula) { memcpy(m_matricula,matricula,6); }
+    void setAnno(int anno) { m_anno = anno; }
 
-    int getAnno() { return m_anno; }
-    char *getMatricula() { return m_matricula; }
+    int   getAnno() { return m_anno; }
+    char* getMatricula() { return m_matricula; }
 
 private:
     char m_matricula[6];
-    int m_anno;
+    int  m_anno;
 };
 
 #endif // CCARRO_H

@@ -1,11 +1,11 @@
 #ifndef CEMPLEADO_H
 #define CEMPLEADO_H
-#include <cstring>
-#include <stdlib.h>
+
 #include <QTimer>
 #include <QObject>
-#include "constantes.h"
+#include <stdlib.h>
 #include "ccarro.h"
+#include "constantes.h"
 
 
 class cEmpleado : public QObject

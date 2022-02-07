@@ -2,6 +2,7 @@
 #define CONSTANTES_H
 
 #define MAX_EMPLEADOS 5
+#define MAX_CARROS_LISTOS 5
 
 enum eTrabajo{
     ninguno = 0,//solo prara inicializacion
