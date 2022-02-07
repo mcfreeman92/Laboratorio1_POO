@@ -1,5 +1,6 @@
 #include "ccarro.h"
 
+
 cCarro::cCarro()
 {
     m_matricula[6] = {0};
