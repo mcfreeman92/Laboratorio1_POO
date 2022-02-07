@@ -12,32 +12,34 @@ class cEmpleado : public QObject
 {
     Q_OBJECT
 public:
-    cEmpleado();
-    cEmpleado(char *nombre,int id,int tipo_empleo);
+    explicit cEmpleado(char *nombre, int id, eTrabajo tipo_empleo ,QObject *parent = nullptr);
 
     void setNombre(char *nombre) { memcpy(m_nombre,nombre,20); }
     void setId(int id) { m_id = id; }
-    void setTipoEmpleo(int tipo_empleo) { m_tipo_empleo = tipo_empleo; }
-    void setCarro(cCarro * carro) { m_carro = carro;
-                                    m_reloj.start(m_tipo_empleo);}
+    void setTipoEmpleo(eTrabajo tipo_empleo) { m_tipo_empleo = tipo_empleo; }
+    void setCarro(cCarro * carro);
 
-    int     getId() { return m_id; }
-    int     getTipoEmpleo() { return m_tipo_empleo; }
-    bool    getOcupado() { return m_ocupado; }
-    char*   getNombre() { return m_nombre; }
-    cCarro* getCarro() { return m_carro; }
+    int      getId() { return m_id; }
+    eTrabajo getTipoEmpleo() { return m_tipo_empleo; }
+    bool     getOcupado() { return m_ocupado; }
+    char*    getNombre() { return m_nombre; }
+    cCarro*  getCarro() { return m_carro; }
 
 private:
-    char m_nombre[20];
-    int m_id;
-    int m_tipo_empleo;
-    int m_tiempo_trabajo;
-    bool m_ocupado;
-    cCarro * m_carro;
-    QTimer m_reloj;
+    char      m_nombre[20];
+    int       m_id;
+    eTrabajo  m_tipo_empleo;
+    int       m_tiempo_trabajo;
+    bool      m_ocupado;
+    cCarro*   m_carro;
+    QTimer*    m_reloj;
 
 private slots:
     void terminaTrabajo();
+
+signals:
+    void s_trabajoTerminado(cCarro*);
+
 };
 
 #endif // CEMPLEADO_H

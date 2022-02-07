@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    cout << "Taller Hola Mundo FORD" << endl;
 
     CTaller taller;
 
@@ -15,18 +15,15 @@ int main()
 
     cCarro carro1(2019,"b12345");
     cCarro carro2(2020,"b54321");
+    cCarro carro3(2026,"b00021");
 
-    taller.insertar_nuevo_empleado(&empleado1);
-    taller.insertar_nuevo_empleado(&empleado2);
-    taller.insertar_nuevo_empleado(&empleado3);
+//    taller.insertar_nuevo_empleado(&empleado1);
+//    taller.insertar_nuevo_empleado(&empleado2);
+//    taller.insertar_nuevo_empleado(&empleado3);
 
-    taller.insertar_nuevo_carro(&carro1,eTrabajo::pintura,eTrabajo::mecanica);
-    taller.insertar_nuevo_carro(&carro2,eTrabajo::electronica);
-
-
-
-
-
+//    cout<<taller.insertar_nuevo_carro(&carro1,eTrabajo::pintura,eTrabajo::mecanica);
+//    cout<<taller.insertar_nuevo_carro(&carro2,eTrabajo::electronica);
+//    cout<<taller.insertar_nuevo_carro(&carro3,eTrabajo::electronica);
 
 
     return 0;
