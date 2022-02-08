@@ -9,9 +9,13 @@ class CTaller : public QObject
 {
     Q_OBJECT
 public:
-    explicit CTaller(QObject *parent = nullptr);
+    explicit CTaller(char* nombre_comercial, char* direccion, QObject *parent = nullptr);
 
-    bool insertar_nuevo_empleado(cEmpleado* empleado);
+    void setNombreComercial(char* nombre_comercial){m_nombre_comercial = nombre_comercial;}
+    void setDireccion(char* direccion){m_direccion = direccion;}
+
+    bool insertar_empleado(cEmpleado* empleado);
+    bool eliminar_empleado(cEmpleado* empleado);
 
     bool insertar_nuevo_carro(cCarro* carro, eTrabajo trabajo1 = eTrabajo::ninguno,
                                              eTrabajo trabajo2 = eTrabajo::ninguno,
@@ -20,9 +24,12 @@ public:
 private:
     cEmpleado* lEmpleados[MAX_EMPLEADOS];
     cCarro* lCarrosListos[MAX_CARROS_LISTOS];
+    bool exixteEmpleado(cEmpleado* empleado);
     bool trabajoDisponible(eTrabajo trabajo);
     bool carros_terminados(cCarro* carro);
     bool asignarEmpleado(cCarro* carro, eTrabajo trabajo);
+    char *m_nombre_comercial;
+    char *m_direccion;
 
 private slots:
     void trabajoTerminado(cCarro* carro);

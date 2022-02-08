@@ -2,7 +2,7 @@
 #define CEMPLEADO_H
 
 #include <QTimer>
-#include <QObject>
+#include <QtCore>
 #include <stdlib.h>
 #include "ccarro.h"
 #include "constantes.h"
@@ -13,7 +13,7 @@ class cEmpleado : public QObject
     Q_OBJECT
 public:
     explicit cEmpleado(char *nombre, int id, eTrabajo tipo_empleo ,QObject *parent = nullptr);
-
+    ~cEmpleado();
     void setNombre(char *nombre) { memcpy(m_nombre,nombre,20); }
     void setId(int id) { m_id = id; }
     void setTipoEmpleo(eTrabajo tipo_empleo) { m_tipo_empleo = tipo_empleo; }
