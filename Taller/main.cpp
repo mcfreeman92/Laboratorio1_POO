@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     cCarro carro2(2020,"b54325");
     cCarro carro3(2026,"b88925");
 
-    cout<<taller.insertar_empleado(&empleado1);
+    cout<</*boolalpha<<*/taller.insertar_empleado(&empleado1);
     cout<<taller.insertar_empleado(&empleado2);
     cout<<taller.insertar_empleado(&empleado3);
     cout<<taller.insertar_empleado(&empleado4)<<endl;

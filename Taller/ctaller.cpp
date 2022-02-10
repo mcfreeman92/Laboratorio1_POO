@@ -14,7 +14,7 @@ bool CTaller::insertar_empleado(cEmpleado *empleado)
     bool aux = false;
     if(!exixteEmpleado(empleado))
         for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-            if(lEmpleados[i] == 0)
+            if(lEmpleados[i] == nullptr)
             {
                 lEmpleados[i] = empleado;
                 connect(lEmpleados[i],SIGNAL(s_trabajoTerminado(cCarro*)),this,SLOT(trabajoTerminado(cCarro*)));
@@ -31,7 +31,7 @@ bool CTaller::exixteEmpleado(cEmpleado *empleado)
     bool aux = false;
 
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if(!(lEmpleados[i] == 0))
+        if(!(lEmpleados[i] == nullptr))
         {
             if(lEmpleados[i]->getId() == empleado->getId())
             {
@@ -49,7 +49,7 @@ bool CTaller::eliminar_empleado(cEmpleado *empleado)
     bool aux = false;
 
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if(lEmpleados[i] != 0)
+        if(lEmpleados[i] != nullptr)
             if(lEmpleados[i] == empleado)
             {
                 lEmpleados[i] = nullptr;
@@ -64,7 +64,7 @@ bool CTaller::carros_terminados(cCarro *carro)
 {
     bool aux = false;
     for (int i = 0; i < MAX_CARROS_LISTOS; ++i) {
-        if(lCarrosListos[i] == 0)
+        if(lCarrosListos[i] == nullptr)
         {
             lCarrosListos[i] = carro;
             qDebug()<<lCarrosListos[i]->getMatricula();
@@ -98,7 +98,7 @@ bool CTaller::trabajoDisponible(eTrabajo trabajo)
 
     if(!trabajo) return true;
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if(lEmpleados[i] == 0) break;
+        if(lEmpleados[i] == nullptr) break;
         if((lEmpleados[i]->getTipoEmpleo() == trabajo)&&(!lEmpleados[i]->getOcupado()))
         {
             aux = true;
@@ -115,7 +115,7 @@ bool CTaller::asignarEmpleado(cCarro *carro, eTrabajo trabajo)
 
     if(!trabajo) return true;
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if(lEmpleados[i] == 0) break;
+        if(lEmpleados[i] == nullptr) break;
         if((lEmpleados[i]->getTipoEmpleo() == trabajo)&&(!lEmpleados[i]->getOcupado()))
         {
             aux = true;
@@ -131,7 +131,7 @@ void CTaller::trabajoTerminado(cCarro *carro)
 {
     bool aux = false;
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if(lEmpleados[i] == 0) break;
+        if(lEmpleados[i] == nullptr) break;
         if((lEmpleados[i]->getCarro() == carro)&&(lEmpleados[i]->getOcupado()))
         {
             aux = true;
