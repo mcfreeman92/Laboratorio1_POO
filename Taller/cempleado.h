@@ -12,7 +12,7 @@ class cEmpleado : public QObject
 {
     Q_OBJECT
 public:
-    explicit cEmpleado(char *nombre, int id, eTrabajo tipo_empleo ,QObject *parent = nullptr);
+    explicit cEmpleado(char *nombre, int id, eTrabajo tipo_empleo);
     ~cEmpleado();
     void setNombre(char *nombre) { memcpy(m_nombre,nombre,20); }
     void setId(int id) { m_id = id; }
@@ -20,7 +20,7 @@ public:
     void setCarro(cCarro * carro);
 
     int      getId() { return m_id; }
-    eTrabajo getTipoEmpleo() { return m_tipo_empleo; }
+    eTrabajo getTipoEmpleo() { if(m_tipo_empleo != eTrabajo::servicio) return m_tipo_empleo; }
     bool     getOcupado() { return m_ocupado; }
     char*    getNombre() { return m_nombre; }
     cCarro*  getCarro() { return m_carro; }

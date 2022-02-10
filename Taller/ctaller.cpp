@@ -6,6 +6,7 @@ CTaller::CTaller(char * nombre_comercial, char *direccion, QObject *parent) :
     m_direccion(direccion)
 {
     for (int i = 0; i < MAX_EMPLEADOS; lEmpleados[i] = {nullptr}, ++i);
+    for (int i = 0; i < MAX_CARROS_LISTOS; lCarrosListos[i] = {nullptr}, ++i);
 }
 
 bool CTaller::insertar_empleado(cEmpleado *empleado)
@@ -45,15 +46,18 @@ bool CTaller::exixteEmpleado(cEmpleado *empleado)
 
 bool CTaller::eliminar_empleado(cEmpleado *empleado)
 {
-    if(!empleado->getOcupado()&&empleado->getCarro()==nullptr)
-        delete empleado;
+    bool aux = false;
 
     for (int i = 0; i < MAX_EMPLEADOS; ++i) {
-        if((lEmpleados[i]->getId() != empleado->getId())&&(lEmpleados[i] == 0))
-        {
-            break;
-        }
+        if(lEmpleados[i] != 0)
+            if(lEmpleados[i] == empleado)
+            {
+                lEmpleados[i] = nullptr;
+                aux=true;
+                break;
+            }
     }
+    return aux;
 }
 
 bool CTaller::carros_terminados(cCarro *carro)
@@ -63,6 +67,7 @@ bool CTaller::carros_terminados(cCarro *carro)
         if(lCarrosListos[i] == 0)
         {
             lCarrosListos[i] = carro;
+            qDebug()<<lCarrosListos[i]->getMatricula();
             aux = true;
             break;
         }
@@ -136,7 +141,7 @@ void CTaller::trabajoTerminado(cCarro *carro)
 
     if(!aux)
     {
-        qDebug()<<carro->getMatricula();
+
         carros_terminados(carro);
     }
     //pregunto si no le falta algun otro trabajo

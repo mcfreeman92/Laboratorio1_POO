@@ -1,7 +1,6 @@
 #include "cempleado.h"
 
-cEmpleado::cEmpleado(char *nombre, int id, eTrabajo tipo_empleo, QObject *parent):
-    QObject(parent),
+cEmpleado::cEmpleado(char *nombre, int id, eTrabajo tipo_empleo):
     m_tiempo_trabajo(5000),
     m_carro(nullptr)
 {
@@ -22,9 +21,12 @@ cEmpleado::~cEmpleado()
 
 void cEmpleado::setCarro(cCarro *carro)
 {
-    m_carro = carro;
-    m_ocupado = true;
-    m_reloj->start(m_tiempo_trabajo);
+    if(m_tipo_empleo != eTrabajo::servicio)
+    {
+        m_carro = carro;
+        m_ocupado = true;
+        m_reloj->start(m_tiempo_trabajo);
+    }
 }
 
 void cEmpleado::terminaTrabajo()
