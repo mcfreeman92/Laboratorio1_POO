@@ -1,14 +1,16 @@
 #ifndef CCARRO_H
 #define CCARRO_H
 
-#include <cstring>
+#include "constantes.h"
+
+using namespace std;
 
 class cCarro
 {
 public:
     cCarro();
-    cCarro(int anno, char *matricula);
-
+    cCarro(int anno, const char matricula[6]);
+    ~cCarro();
     void setMatricula(char *matricula) { memcpy(m_matricula,matricula,6); }
     void setAnno(int anno) { m_anno = anno; }
 

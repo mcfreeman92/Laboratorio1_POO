@@ -3,6 +3,17 @@
 
 #define MAX_EMPLEADOS 5
 #define MAX_CARROS_LISTOS 5
+#define MAX_CARROS_ESPERA 5
+#define TAM_MATRICULA 6
+
+#include <memory> //para puntereos inteligentes
+#include <iostream>
+#include <chrono> //manejo y medir el tiempo
+#include <cstring>
+#include <string>
+#include <stdlib.h>
+#include <utility>
+#include <tuple>
 
 enum eTrabajo{
     ninguno = 0,//solo prara inicializacion

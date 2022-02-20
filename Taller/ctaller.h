@@ -5,6 +5,8 @@
 #include <QDebug>
 #include "cempleado.h"
 
+using namespace std;
+
 class CTaller : public QObject
 {
     Q_OBJECT
@@ -17,22 +19,25 @@ public:
     bool insertar_empleado(cEmpleado* empleado);
     bool eliminar_empleado(cEmpleado* empleado);
 
-    bool insertar_nuevo_carro(cCarro* carro, eTrabajo trabajo1 = eTrabajo::ninguno,
+    bool insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1 = eTrabajo::ninguno,
                                              eTrabajo trabajo2 = eTrabajo::ninguno,
                                              eTrabajo trabajo3 = eTrabajo::ninguno);
 
 private:
+    void ordena(tuple<int, cCarro, eTrabajo, eTrabajo, eTrabajo> &arr);
     cEmpleado* lEmpleados[MAX_EMPLEADOS];
-    cCarro* lCarrosListos[MAX_CARROS_LISTOS];
+    shared_ptr<cCarro> lCarrosEspera[MAX_CARROS_ESPERA];
+    tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> m_ListaEspera[MAX_CARROS_ESPERA];
     bool exixteEmpleado(cEmpleado* empleado);
     bool trabajoDisponible(eTrabajo trabajo);
-    bool carros_terminados(cCarro* carro);
-    bool asignarEmpleado(cCarro* carro, eTrabajo trabajo);
+    void insertaEspera(tuple<int, shared_ptr<cCarro>, eTrabajo,eTrabajo,eTrabajo> carro_espera);
+    bool asignarEmpleado(shared_ptr<cCarro> carro, eTrabajo trabajo);
     char *m_nombre_comercial;
     char *m_direccion;
-
+    int m_orden;
 private slots:
-    void trabajoTerminado(cCarro* carro);
+
+    void trabajoTerminado();
 
 };
 
