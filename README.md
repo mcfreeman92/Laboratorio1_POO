@@ -1,2 +1,2 @@
-# Laboratorio1_POO
+# Tarea_POO
 Maestría de Sistemas Digitales
