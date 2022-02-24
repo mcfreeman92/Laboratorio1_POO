@@ -6,6 +6,7 @@
 #define MAX_CARROS_ESPERA 5
 #define TAM_MATRICULA 6
 
+
 #include <memory> //para puntereos inteligentes
 #include <iostream>
 #include <chrono> //manejo y medir el tiempo
@@ -14,6 +15,8 @@
 #include <stdlib.h>
 #include <utility>
 #include <tuple>
+
+#define LOG(x) std::cout<<x<<std::endl
 
 enum eTrabajo{
     ninguno = 0,//solo prara inicializacion

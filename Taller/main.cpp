@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 //        cout << duration_cast<microseconds>(s);
 //        cout << duration_cast<nanoseconds>(s) ;
 
-//    QCoreApplication a(argc, argv);
+    QCoreApplication a(argc, argv);
 
     cout << "Taller Hola Mundo FORD" << endl;
 
@@ -20,22 +20,22 @@ int main(int argc, char *argv[])
     cEmpleado empleado1("lolo",1,eTrabajo::pintura);
     cEmpleado empleado2("lala",2,eTrabajo::mecanica);
     cEmpleado empleado3("lulu",3,eTrabajo::electronica);
-    cEmpleado empleado4("lili",2,eTrabajo::pintura);
 
     shared_ptr<cCarro> carro1 = make_shared<cCarro>(2019,"b12345");
-    shared_ptr<cCarro> carro2 = make_shared<cCarro>(2020,"b54325");
-    shared_ptr<cCarro> carro3 = make_shared<cCarro>(2026,"b88925");
+    shared_ptr<cCarro> carro2 = make_shared<cCarro>(2020,"b54322");
+    shared_ptr<cCarro> carro3 = make_shared<cCarro>(1992,"b88926");
+    shared_ptr<cCarro> carro4 = make_shared<cCarro>(2000,"b87777");
+    shared_ptr<cCarro> carro5 = make_shared<cCarro>(1500,"b78551");
 
-    cout<</*boolalpha<<*/taller.insertar_empleado(&empleado1);
-    cout<<taller.insertar_empleado(&empleado2);
-    cout<<taller.insertar_empleado(&empleado3);
-    cout<<taller.insertar_empleado(&empleado4)<<endl;
+    taller.insertar_empleado(&empleado1);
+    taller.insertar_empleado(&empleado2);
+    taller.insertar_empleado(&empleado3);
 
-    cout<<taller.insertar_nuevo_carro(carro1,eTrabajo::pintura,eTrabajo::mecanica);
-    cout<<taller.insertar_nuevo_carro(carro2,eTrabajo::pintura);
-    cout<<taller.insertar_nuevo_carro(carro2,eTrabajo::electronica);
-    cout<<taller.eliminar_empleado(&empleado4)<<endl;
+    taller.insertar_nuevo_carro(carro1,eTrabajo::pintura,eTrabajo::mecanica);
+    taller.insertar_nuevo_carro(carro2,eTrabajo::pintura);
+    taller.insertar_nuevo_carro(carro3,eTrabajo::electronica);
+    taller.insertar_nuevo_carro(carro4,eTrabajo::electronica,eTrabajo::pintura,eTrabajo::mecanica);
+    taller.insertar_nuevo_carro(carro5,eTrabajo::mecanica);
 
-    return 0;
-//    return a.exec();
+    return a.exec();
 }

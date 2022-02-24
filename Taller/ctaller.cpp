@@ -7,10 +7,9 @@ CTaller::CTaller(char * nombre_comercial, char *direccion, QObject *parent) :
     m_orden(0)
 {
     for (int i = 0; i < MAX_EMPLEADOS; lEmpleados[i] = {nullptr}, ++i);
-    //    for (int i = 0; i < MAX_CARROS_ESPERA; lCarrosEspera[i] = {nullptr}, ++i);
-    for(auto e: m_ListaEspera){
-        e = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,eTrabajo::ninguno);
-    }
+    for (int i = 0; i < MAX_CARROS_ESPERA;
+         m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,
+                                       eTrabajo::ninguno),++i);
 }
 
 bool CTaller::insertar_empleado(cEmpleado *empleado)
@@ -64,27 +63,13 @@ bool CTaller::eliminar_empleado(cEmpleado *empleado)
     return aux;
 }
 
-//bool CTaller::carros_terminados(cCarro *carro)
-//{
-//    bool aux = false;
-//    for (int i = 0; i < MAX_CARROS_LISTOS; ++i) {
-////        if(lCarrosListos[i] == nullptr)
-//        {
-////            lCarrosListos[i] = carro;
-////            qDebug()<<lCarrosListos[i]->getMatricula();
-//            aux = true;
-//            break;
-//        }
-//    }
-//    return aux;
-//}
-
 bool CTaller::insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1, eTrabajo trabajo2, eTrabajo trabajo3)
 {
     bool aux = false;
 
     if(trabajoDisponible(trabajo1)&&trabajoDisponible(trabajo2)&&trabajoDisponible(trabajo3))
     {
+        LOG("carro "<<carro->getMatricula()<<" en trabajos...");
         aux = true;
         asignarEmpleado(carro,trabajo1);
         asignarEmpleado(carro,trabajo2);
@@ -92,6 +77,7 @@ bool CTaller::insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1, 
     }
     else
     {
+        LOG("carro "<<carro->getMatricula()<<" en espera...");
         m_orden++;
         insertaEspera(make_tuple(m_orden,carro,trabajo1,trabajo2,trabajo3));
     }
@@ -99,17 +85,17 @@ bool CTaller::insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1, 
     return aux;
 }
 
-void CTaller::ordena(tuple<int, cCarro, eTrabajo, eTrabajo, eTrabajo> &arr)
+void CTaller::ordena(tuple<int , cCarro, eTrabajo, eTrabajo, eTrabajo> arr, int n)
 {
-//    if (n == 1)return;
+    if (n == 1)return;
 
 //    for (int i = 0; i < n - 1; i++) {
-//        if (arr[i] > arr[i + 1]) {
+//        if (get<0>(arr[i]) > get<0>(arr[i + 1])) {
 //            swap(arr[i], arr[i + 1]);
 //        }
 //    }
 
-//    ordena(arr, n - 1);
+    ordena(arr, n - 1);
 }
 
 
@@ -154,16 +140,16 @@ void CTaller::insertaEspera(tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrab
     bool aux = false;
 
     //me aseguro que no existe este carro
-    for(auto e: m_ListaEspera)
-        if(get<0>(e) != 0)
-            if(get<1>(e) == get<1>(carro_espera)) return;
+    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+        if(get<0>(m_ListaEspera[i]) != 0)
+            if(get<1>(m_ListaEspera[i]) == get<1>(carro_espera)) return;
 
     //busco una pos vacia para insertarlo
-    for(auto e: m_ListaEspera)
+    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
     {
-        if(get<0>(e) == 0)
+        if(get<0>(m_ListaEspera[i]) == 0)
         {
-            e = carro_espera;
+            m_ListaEspera[i] = carro_espera;
             aux = true;
             break;
         }
@@ -172,14 +158,13 @@ void CTaller::insertaEspera(tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrab
 
 void CTaller::trabajoTerminado()
 {
-    for(auto e: m_ListaEspera)
-        if(get<0>(e) != 0)
-            if(insertar_nuevo_carro(get<1>(e),get<2>(e),get<3>(e),get<4>(e)))
+    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+        if(get<0>(m_ListaEspera[i]) != 0)
+            if(insertar_nuevo_carro(get<1>(m_ListaEspera[i]),get<2>(m_ListaEspera[i]),get<3>(m_ListaEspera[i]),get<4>(m_ListaEspera[i])))
             {
-                e = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,eTrabajo::ninguno);
-
+                m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,eTrabajo::ninguno);
                 return;
             }
 
-//    ordena(m_ListaEspera);
+//        ordena(m_ListaEspera,MAX_CARROS_LISTOS);
 }

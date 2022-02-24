@@ -24,7 +24,7 @@ public:
                                              eTrabajo trabajo3 = eTrabajo::ninguno);
 
 private:
-    void ordena(tuple<int, cCarro, eTrabajo, eTrabajo, eTrabajo> &arr);
+    void ordena(tuple<int, cCarro, eTrabajo, eTrabajo, eTrabajo> arr, int n);
     cEmpleado* lEmpleados[MAX_EMPLEADOS];
     shared_ptr<cCarro> lCarrosEspera[MAX_CARROS_ESPERA];
     tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> m_ListaEspera[MAX_CARROS_ESPERA];
