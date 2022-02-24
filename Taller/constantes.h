@@ -6,7 +6,8 @@
 #define MAX_CARROS_ESPERA 5
 #define TAM_MATRICULA 6
 
-
+#include <QTimer>
+#include <QtCore>
 #include <memory> //para puntereos inteligentes
 #include <iostream>
 #include <chrono> //manejo y medir el tiempo
@@ -25,5 +26,6 @@ enum eTrabajo{
     electronica = 3,
     servicio = 4
 };
+
 
 #endif // CONSTANTES_H

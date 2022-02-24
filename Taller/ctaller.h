@@ -23,8 +23,10 @@ public:
                                              eTrabajo trabajo2 = eTrabajo::ninguno,
                                              eTrabajo trabajo3 = eTrabajo::ninguno);
 
+    void busca_carro_espera(char * matricula);
+
 private:
-    void ordena(tuple<int, cCarro, eTrabajo, eTrabajo, eTrabajo> arr, int n);
+    void ordena(cEmpleado* arr[MAX_EMPLEADOS], int n = MAX_EMPLEADOS);
     cEmpleado* lEmpleados[MAX_EMPLEADOS];
     shared_ptr<cCarro> lCarrosEspera[MAX_CARROS_ESPERA];
     tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> m_ListaEspera[MAX_CARROS_ESPERA];
@@ -35,6 +37,8 @@ private:
     char *m_nombre_comercial;
     char *m_direccion;
     int m_orden;
+    char *TrabajoToStr(eTrabajo t);
+    void areaMasDemorada();
 private slots:
 
     void trabajoTerminado();

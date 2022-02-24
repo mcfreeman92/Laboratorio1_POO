@@ -1,9 +1,6 @@
 #ifndef CEMPLEADO_H
 #define CEMPLEADO_H
 
-#include <QTimer>
-#include <QtCore>
-
 #include "ccarro.h"
 #include "constantes.h"
 
@@ -25,8 +22,9 @@ public:
     bool     getOcupado() { return m_ocupado; }
     char*    getNombre() { return m_nombre; }
     shared_ptr<cCarro>  getCarro() { return m_carro; }
-
+    double getDemora(){ return  m_demora;}
 private:
+    double m_demora;
     char      m_nombre[20];
     int       m_id;
     eTrabajo  m_tipo_empleo;

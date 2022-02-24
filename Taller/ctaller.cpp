@@ -85,17 +85,64 @@ bool CTaller::insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1, 
     return aux;
 }
 
-void CTaller::ordena(tuple<int , cCarro, eTrabajo, eTrabajo, eTrabajo> arr, int n)
+char* CTaller::TrabajoToStr(eTrabajo t){
+    char * str = nullptr;
+    switch (t) {
+    case 1:
+        str = "pintura";
+        break;
+    case 2:
+        str = "mecanica";
+        break;
+    case 3:
+        str = "electronica";
+        break;
+    }
+
+    return str;
+}
+
+void CTaller::areaMasDemorada()
 {
-    if (n == 1)return;
+    ordena(lEmpleados);
+    LOG("El area mas demorada es " << TrabajoToStr(lEmpleados[0]->getTipoEmpleo()));
 
-//    for (int i = 0; i < n - 1; i++) {
-//        if (get<0>(arr[i]) > get<0>(arr[i + 1])) {
-//            swap(arr[i], arr[i + 1]);
-//        }
-//    }
+};
 
-    ordena(arr, n - 1);
+void CTaller::busca_carro_espera(char *matricula)
+{
+    for(auto e: m_ListaEspera)
+    {
+        if(get<0>(e) != 0)
+            if(get<1>(e)->getMatricula() == matricula)
+            {
+                LOG("trabajos del carro " << matricula);
+                if(get<2>(e))
+                    LOG(TrabajoToStr(get<2>(e)));
+                if(get<3>(e))
+                    LOG(TrabajoToStr(get<3>(e)));
+                if(get<4>(e))
+                    LOG(TrabajoToStr(get<4>(e)));
+                return;
+            }
+    }
+}
+
+void CTaller::ordena(cEmpleado* arr[], int n)
+{
+        if (n == 1)return;
+
+        for (int i = 0; i < n - 1; i++) {
+            if((arr[i] != nullptr) && (arr[i+1] != nullptr))
+            {
+            if (arr[i]->getDemora() < arr[i + 1]->getDemora()) {
+                swap(arr[i], arr[i + 1]);
+            }
+            }
+            else break;
+        }
+
+        ordena(arr, n - 1);
 }
 
 
@@ -158,6 +205,13 @@ void CTaller::insertaEspera(tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrab
 
 void CTaller::trabajoTerminado()
 {
+    //lista ya est'a vacia
+    bool aux = false;
+    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+        if(get<0>(m_ListaEspera[i]) != 0){ aux = true; break;}
+    if(!aux)  areaMasDemorada();
+
+
     for(int i = 0;i<MAX_CARROS_ESPERA;i++)
         if(get<0>(m_ListaEspera[i]) != 0)
             if(insertar_nuevo_carro(get<1>(m_ListaEspera[i]),get<2>(m_ListaEspera[i]),get<3>(m_ListaEspera[i]),get<4>(m_ListaEspera[i])))
@@ -166,5 +220,5 @@ void CTaller::trabajoTerminado()
                 return;
             }
 
-//        ordena(m_ListaEspera,MAX_CARROS_LISTOS);
+    //        ordena(m_ListaEspera,MAX_CARROS_LISTOS);
 }
