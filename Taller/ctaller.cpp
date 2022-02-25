@@ -25,7 +25,6 @@ bool CTaller::insertar_empleado(cEmpleado *empleado)
                 break;
             }
         }
-
     return aux;
 }
 
@@ -98,7 +97,6 @@ char* CTaller::TrabajoToStr(eTrabajo t){
         str = "electronica";
         break;
     }
-
     return str;
 }
 
@@ -106,6 +104,11 @@ void CTaller::areaMasDemorada()
 {
     ordena(lEmpleados);
     LOG("El area mas demorada es " << TrabajoToStr(lEmpleados[0]->getTipoEmpleo()));
+
+}
+
+void CTaller::ajustaLista()
+{
 
 };
 

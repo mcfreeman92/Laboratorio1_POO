@@ -39,6 +39,7 @@ private:
     int m_orden;
     char *TrabajoToStr(eTrabajo t);
     void areaMasDemorada();
+    void ajustaLista();
 private slots:
 
     void trabajoTerminado();
