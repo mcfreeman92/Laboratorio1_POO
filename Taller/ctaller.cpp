@@ -104,7 +104,6 @@ void CTaller::areaMasDemorada()
 {
     ordena(lEmpleados);
     LOG("El area mas demorada es " << TrabajoToStr(lEmpleados[0]->getTipoEmpleo()));
-
 }
 
 void CTaller::ajustaLista()
