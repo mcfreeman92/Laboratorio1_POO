@@ -7,9 +7,9 @@ CTaller::CTaller(char * nombre_comercial, char *direccion, QObject *parent) :
     m_orden(0)
 {
     for (int i = 0; i < MAX_EMPLEADOS; lEmpleados[i] = {nullptr}, ++i);
-    for (int i = 0; i < MAX_CARROS_ESPERA;
-         m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,
-                                       eTrabajo::ninguno),++i);
+//    for (int i = 0; i < MAX_CARROS_ESPERA;
+//         m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,
+//                                       eTrabajo::ninguno),++i);
 }
 
 bool CTaller::insertar_empleado(cEmpleado *empleado)
@@ -78,7 +78,7 @@ bool CTaller::insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1, 
     {
         LOG("carro "<<carro->getMatricula()<<" en espera...");
         m_orden++;
-        insertaEspera(make_tuple(m_orden,carro,trabajo1,trabajo2,trabajo3));
+        insertaEspera(make_tuple(carro,trabajo1,trabajo2,trabajo3));
     }
 
     return aux;
@@ -111,23 +111,32 @@ void CTaller::ajustaLista()
 
 };
 
-void CTaller::busca_carro_espera(char *matricula)
+bool CTaller::busca_carro_espera(char *matricula)
 {
-    for(auto e: m_ListaEspera)
-    {
-        if(get<0>(e) != 0)
-            if(get<1>(e)->getMatricula() == matricula)
-            {
-                LOG("trabajos del carro " << matricula);
-                if(get<2>(e))
-                    LOG(TrabajoToStr(get<2>(e)));
-                if(get<3>(e))
-                    LOG(TrabajoToStr(get<3>(e)));
-                if(get<4>(e))
-                    LOG(TrabajoToStr(get<4>(e)));
-                return;
-            }
-    }
+    bool aux = false;
+    vector<tuple<shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo>>::iterator it;
+    tuple<shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> dato;
+
+    it = find(m_ListaEspera_v.begin(),m_ListaEspera_v.end(),matricula);
+    *it;
+    LOG(get<0>(*it)->getMatricula());
+//    for(auto e: m_ListaEspera)
+//    {
+//        if(get<0>(e) != 0)
+//            if(get<1>(e)->getMatricula() == matricula)
+//            {
+//                LOG("trabajos del carro " << matricula);
+//                if(get<2>(e))
+//                    LOG(TrabajoToStr(get<2>(e)));
+//                if(get<3>(e))
+//                    LOG(TrabajoToStr(get<3>(e)));
+//                if(get<4>(e))
+//                    LOG(TrabajoToStr(get<4>(e)));
+//                aux = true;
+//                break;
+//            }
+//    }
+    return aux;
 }
 
 void CTaller::ordena(cEmpleado* arr[], int n)
@@ -184,43 +193,51 @@ bool CTaller::asignarEmpleado(shared_ptr<cCarro> carro, eTrabajo trabajo)
     return aux;
 }
 
-void CTaller::insertaEspera(tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> carro_espera)
+void CTaller::insertaEspera(tuple<shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> carro_espera)
 {
     bool aux = false;
 
-    //me aseguro que no existe este carro
-    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
-        if(get<0>(m_ListaEspera[i]) != 0)
-            if(get<1>(m_ListaEspera[i]) == get<1>(carro_espera)) return;
+    m_ListaEspera_v.push_back(carro_espera);
+    vector<tuple<shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo>>::iterator it;
+    for(it = m_ListaEspera_v.begin();it != m_ListaEspera_v.end(); it++)
+    {
+
+        LOG(get<0>(*it)->getMatricula());
+    }
+
+//    //me aseguro que no existe este carro
+//    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+//        if(get<0>(m_ListaEspera[i]) != 0)
+//            if(get<1>(m_ListaEspera[i]) == get<1>(carro_espera)) return;
 
     //busco una pos vacia para insertarlo
-    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
-    {
-        if(get<0>(m_ListaEspera[i]) == 0)
-        {
-            m_ListaEspera[i] = carro_espera;
-            aux = true;
-            break;
-        }
-    }
+//    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+//    {
+//        if(get<0>(m_ListaEspera[i]) == 0)
+//        {
+//            m_ListaEspera[i] = carro_espera;
+//            aux = true;
+//            break;
+//        }
+//    }
 }
 
 void CTaller::trabajoTerminado()
 {
     //lista ya est'a vacia
-    bool aux = false;
-    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
-        if(get<0>(m_ListaEspera[i]) != 0){ aux = true; break;}
-    if(!aux)  areaMasDemorada();
+//    bool aux = false;
+//    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+//        if(get<0>(m_ListaEspera[i]) != 0){ aux = true; break;}
+//    if(!aux)  areaMasDemorada();
 
 
-    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
-        if(get<0>(m_ListaEspera[i]) != 0)
-            if(insertar_nuevo_carro(get<1>(m_ListaEspera[i]),get<2>(m_ListaEspera[i]),get<3>(m_ListaEspera[i]),get<4>(m_ListaEspera[i])))
-            {
-                m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,eTrabajo::ninguno);
-                return;
-            }
+//    for(int i = 0;i<MAX_CARROS_ESPERA;i++)
+//        if(get<0>(m_ListaEspera[i]) != 0)
+//            if(insertar_nuevo_carro(get<1>(m_ListaEspera[i]),get<2>(m_ListaEspera[i]),get<3>(m_ListaEspera[i]),get<4>(m_ListaEspera[i])))
+//            {
+//                m_ListaEspera[i] = make_tuple(0,nullptr,eTrabajo::ninguno,eTrabajo::ninguno,eTrabajo::ninguno);
+//                return;
+//            }
 
     //        ordena(m_ListaEspera,MAX_CARROS_LISTOS);
 }

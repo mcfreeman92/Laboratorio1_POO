@@ -15,6 +15,8 @@
 #include <string>
 #include <stdlib.h>
 #include <utility>
+#include <algorithm>
+#include <vector>
 #include <tuple>
 
 #define LOG(x) std::cout<<x<<std::endl
