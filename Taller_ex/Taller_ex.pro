@@ -15,11 +15,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ccarro.cpp \
+        ceareaproductiva.cpp \
+        ceareaservicio.cpp \
         ctaller.cpp \
         cempleado.cpp \
         main.cpp
 
 HEADERS += \
+        ccarro.h \
+        ceareaproductiva.h \
+        ceareaservicio.h \
         ctaller.h \
         cempleado.h
 

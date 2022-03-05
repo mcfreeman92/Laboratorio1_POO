@@ -1,25 +1,28 @@
 #ifndef CEMPLEADO_H
 #define CEMPLEADO_H
+#define TAM_NOMBRE 20
 
 #include <QObject>
+
+using namespace std;
 
 class cempleado : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ getId WRITE setId);
-    Q_PROPERTY(char* nombre READ getNombre WRITE setNombre);
 
 public:
-    explicit cempleado(char *nombre, int id, QObject *parent = nullptr);
+    cempleado();
+    cempleado(cempleado &e);
+    cempleado(const char *nombre, int id);
 
-    void setNombre(char* nombre) { memcpy(m_nombre,nombre,20); }
+    void setNombre(const char* nombre) { memcpy(m_nombre,nombre,TAM_NOMBRE); }
     void setId(int id) { m_id = id; }
 
     int   getId() { return m_id; }
     char* getNombre() { return m_nombre;}
 
 private:
-    char  m_nombre[20];
+    char  m_nombre[TAM_NOMBRE];
     int   m_id;
 };
 

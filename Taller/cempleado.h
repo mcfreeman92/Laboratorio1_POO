@@ -15,13 +15,13 @@ public:
     void setNombre(char *nombre) { memcpy(m_nombre,nombre,20); }
     void setId(int id) { m_id = id; }
     void setTipoEmpleo(eTrabajo tipo_empleo) { m_tipo_empleo = tipo_empleo; }
-    void setCarro(shared_ptr<cCarro> carro);
+    void setCarro(shared_ptr<ccarro> carro);
 
     int      getId() { return m_id; }
     eTrabajo getTipoEmpleo() { if(m_tipo_empleo != eTrabajo::servicio) return m_tipo_empleo; }
     bool     getOcupado() { return m_ocupado; }
     char*    getNombre() { return m_nombre; }
-    shared_ptr<cCarro>  getCarro() { return m_carro; }
+    shared_ptr<ccarro>  getCarro() { return m_carro; }
     double getDemora(){ return  m_demora;}
 private:
     double m_demora;
@@ -30,7 +30,7 @@ private:
     eTrabajo  m_tipo_empleo;
     int       m_tiempo_trabajo;
     bool      m_ocupado;
-    shared_ptr<cCarro>  m_carro;
+    shared_ptr<ccarro>  m_carro;
     QTimer  m_reloj;
 
 private slots:

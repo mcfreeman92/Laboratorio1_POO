@@ -19,7 +19,7 @@ public:
     bool insertar_empleado(cEmpleado* empleado);
     bool eliminar_empleado(cEmpleado* empleado);
 
-    bool insertar_nuevo_carro(shared_ptr<cCarro> carro, eTrabajo trabajo1 = eTrabajo::ninguno,
+    bool insertar_nuevo_carro(shared_ptr<ccarro> carro, eTrabajo trabajo1 = eTrabajo::ninguno,
                                              eTrabajo trabajo2 = eTrabajo::ninguno,
                                              eTrabajo trabajo3 = eTrabajo::ninguno);
 
@@ -28,15 +28,15 @@ public:
 private:
     void ordena(cEmpleado* arr[MAX_EMPLEADOS], int n = MAX_EMPLEADOS);
     cEmpleado* lEmpleados[MAX_EMPLEADOS];
-    shared_ptr<cCarro> lCarrosEspera[MAX_CARROS_ESPERA];
+    shared_ptr<ccarro> lCarrosEspera[MAX_CARROS_ESPERA];
 
 //    tuple<int,shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo> m_ListaEspera[MAX_CARROS_ESPERA];
-    vector<tuple<shared_ptr<cCarro>,eTrabajo,eTrabajo,eTrabajo>> m_ListaEspera_v;
+    vector<tuple<shared_ptr<ccarro>,eTrabajo,eTrabajo,eTrabajo>> m_ListaEspera_v;
 
     bool exixteEmpleado(cEmpleado* empleado);
     bool trabajoDisponible(eTrabajo trabajo);
-    void insertaEspera(tuple<shared_ptr<cCarro>, eTrabajo, eTrabajo, eTrabajo> carro_espera);
-    bool asignarEmpleado(shared_ptr<cCarro> carro, eTrabajo trabajo);
+    void insertaEspera(tuple<shared_ptr<ccarro>, eTrabajo, eTrabajo, eTrabajo> carro_espera);
+    bool asignarEmpleado(shared_ptr<ccarro> carro, eTrabajo trabajo);
     char *m_nombre_comercial;
     char *m_direccion;
     int m_orden;
