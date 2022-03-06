@@ -28,17 +28,14 @@ int main(int argc, char *argv[])
 
     taller.eliminar_empleado(3);
 
-//    e2->setCarro(carro3);
-//    taller.eliminar_empleado(2);
-
-
-    taller.insertar_carro(carro2);
+    taller.insertar_carro(carro2);    
     taller.insertar_carro(carro3);
+    taller.eliminar_empleado(2);
     taller.insertar_carro(carro1);
 
     taller.muestra_trabajos_carro_espera("B12345");
     taller.eliminar_carro_espera("B12345");
 
-
+    //return 0;
     return a.exec();
 }

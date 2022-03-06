@@ -3,7 +3,8 @@
 
 #define TAM_MATRICULA 6
 
-#include <QObject>
+#include <vector>
+#include <chrono>
 #include <iostream>
 
 using namespace std;

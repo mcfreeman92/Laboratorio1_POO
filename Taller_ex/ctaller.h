@@ -15,7 +15,7 @@ public:
     ctaller(const char* nombre, const char* direccion);
     void insertar_empleado(shared_ptr<ceareaproductiva> &empleado);
     void insertar_empleado(shared_ptr<ceareaservicio> &empleado);
-    void insertar_carro(shared_ptr<ccarro> &carro);
+    bool insertar_carro(shared_ptr<ccarro> &carro);
 
     bool eliminar_empleado(int id);
     shared_ptr<ccarro> muestra_trabajos_carro_espera(const char *matricula);
@@ -23,6 +23,8 @@ public:
     void muestra_tiempo_area_mas_demorada(const char *matricula);
     bool eliminar_carro_espera(const char *matricula);
 
+private slots:
+    void on_trabajo_terminado();
 private:
     char m_nombre[20];
     char m_direccion[40];

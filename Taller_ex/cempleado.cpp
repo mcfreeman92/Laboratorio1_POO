@@ -1,9 +1,8 @@
 #include "cempleado.h"
 
-cempleado::cempleado():    
-    m_nombre("")
+cempleado::cempleado()
 {
-    m_id = 0;
+
 }
 
 cempleado::cempleado(cempleado &e) :
@@ -16,4 +15,6 @@ cempleado::cempleado(const char *nombre, int id)
 {
     memcpy(m_nombre,nombre,TAM_NOMBRE);
     m_id = id;
+//    connect(&m_reloj,SIGNAL(timeout()),this,SIGNAL(on_run()));
+//    connect(&m_reloj,SIGNAL(timeout()),this,SIGNAL(s_trabajo_terminado()));
 }

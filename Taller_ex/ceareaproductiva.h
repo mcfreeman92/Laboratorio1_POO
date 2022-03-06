@@ -9,8 +9,10 @@ using namespace std;
 
 class ceareaproductiva : public cempleado
 {
+
 public:
     ceareaproductiva();
+    ~ceareaproductiva();
     ceareaproductiva(cempleado &e, eArea area);
     ceareaproductiva(const char *nombre, int id, eArea area);
 
@@ -18,6 +20,9 @@ public:
 
     shared_ptr<ccarro> getCarro(){return m_carro;}
     eArea getArea(){return m_area;}
+
+public slots:
+    void on_run();
 
 private:
     shared_ptr<ccarro> m_carro;

@@ -10,6 +10,17 @@ ctaller::ctaller(const char *nombre, const char *direccion)
 
 void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
 {
+//    ceareaproductiva *s = (ceareaproductiva*)empleado.get();;
+//    connect(s,SIGNAL(s_trabajo_terminado()),this,SLOT(on_trabajo_terminado()));
+    connect(empleado.get(),&ceareaproductiva::s_trabajo_terminado,[&](){
+        auto carro = areaEspera.begin();
+        if(insertar_carro(*carro))
+        {
+            areaEspera.erase(carro);
+            muestra_carros_espera();
+        }
+        cout <<"TERMINADO & "<<endl;
+    });
     empleados.push_back(empleado);
 }
 
@@ -18,22 +29,30 @@ void ctaller::insertar_empleado(shared_ptr<ceareaservicio> &empleado)
     empleados.push_back(empleado);
 }
 
-void ctaller::insertar_carro(shared_ptr<ccarro> &carro)
+bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
 {
-
     if(!disponibilidad_trabajos(carro))
     {
-        areaEspera.push_back(carro);
-        cout <<"carro "<<carro->getMatricula()<<" en espera..."<<endl;
+        auto it = find(areaEspera.cbegin(),areaEspera.cend(),carro);
+        if(it == areaEspera.end())
+        {
+           areaEspera.push_back(carro);
+           cout <<"carro "<<carro->getMatricula()<<" en espera..."<<endl;
+         }
+        else
+            cout <<"carro "<<carro->getMatricula()<<" sigue espera..."<<endl;
+        return true;
     }
     else
+    {
         inicia_trabajos(carro);
+        return false;
+    }
 
 }
 
 bool ctaller::eliminar_empleado(int id)
 {
-
     for (auto it = empleados.begin(); it != empleados.end(); it++)
     {
         shared_ptr<cempleado>e = *it;
@@ -43,7 +62,7 @@ bool ctaller::eliminar_empleado(int id)
             {
                 ceareaproductiva *eap = (ceareaproductiva*)e.get();
                 if(eap->getCarro() == nullptr)
-                {                    
+                {
                     empleados.erase(it);
                     cout<<"empleado id:"<<id<<" eliminado OK"<<endl;
                     muestra_empleados();
@@ -98,11 +117,15 @@ bool ctaller::eliminar_carro_espera(const char *matricula)
     return false;
 }
 
+void ctaller::on_trabajo_terminado()
+{
+    cout <<"TERMINADO "<<endl;
+}
+
 void ctaller::muestra_empleados()
 {
-    for (auto it = empleados.begin(); it != empleados.end(); it++) {
-        cempleado e = **it;
-        cout << e.getNombre()<<endl;
+    for (auto it : empleados) {
+        cout << it->getNombre()<<endl;
     }
     cout <<"total empleados "<< empleados.size()<<endl;
 }
@@ -156,8 +179,8 @@ void ctaller::inicia_trabajos(shared_ptr<ccarro> &carro)
                 ceareaproductiva *eap = (ceareaproductiva*)e.get();
                 if((eap->getArea() == a))
                 {
+                    cout <<e->getNombre()<< " inicia trabajo en carro "<<carro->getMatricula()<<endl;
                     eap->setCarro(carro);
-                    cout <<eap->getNombre()<< " inicia trabajo en carro "<<eap->getCarro()->getMatricula()<<endl;
                 }
             }
 

@@ -22,5 +22,5 @@ ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> areas):
 
 ccarro::~ccarro()
 {
-
+    cout <<"carro "<<m_matricula<<" destruido"<<endl;
 }
