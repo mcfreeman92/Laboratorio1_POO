@@ -16,4 +16,10 @@ ceareaproductiva::ceareaproductiva(const char *nombre, int id, eArea area):
 {
     setId(id);
     setNombre(nombre);
+    cout <<"creado empleado "<<getNombre()<< " area productiva"<<endl;
+}
+
+void ceareaproductiva::setCarro(shared_ptr<ccarro> carro)
+{
+   m_carro = carro;
 }

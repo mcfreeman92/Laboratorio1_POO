@@ -4,19 +4,20 @@
 #define TAM_MATRICULA 6
 
 #include <QObject>
+#include <iostream>
 
 using namespace std;
+
+enum eArea
+{
+   mecanica = 1,
+   pintura = 2,
+   electrica = 3
+};
 
 class ccarro
 {
 public:
-    enum eArea
-    {
-       mecanica = 1,
-       pintura = 2,
-       electrica = 3
-    };
-
     ccarro();
     ccarro(ccarro &);
     ccarro(const char *matricula, int anno,const std::vector<eArea> areas);
@@ -31,13 +32,11 @@ public:
 
 
 
-    void setStartTime(bool timeStart){m_timeStart = timeStart;
-                                     startTime = std::chrono::system_clock::now();}
+    void iniciaTiempo(){if(!m_iniciaTiempo){m_iniciaTiempo = true; tinicio = std::chrono::system_clock::now();}}
     void setAllTime(double t){allTime += getElapsedTime();}
 
-    bool    getStartTime(){return m_timeStart;}
-    double  getElapsedTime(){auto end = std::chrono::system_clock::now();
-                            return double(std::chrono::duration_cast<std::chrono::milliseconds>(end - startTime).count());}
+    double  getElapsedTime(){auto tfin = std::chrono::system_clock::now();
+                            return double(std::chrono::duration_cast<std::chrono::milliseconds>(tfin - tinicio).count());}
     double getAllTime(){return  allTime;}
 
 
@@ -47,8 +46,8 @@ private:
     int  m_anno;
     int  m_id;
 
-    std::chrono::system_clock::time_point startTime;
-    bool m_timeStart;
+    std::chrono::system_clock::time_point tinicio;
+    bool m_iniciaTiempo;
     double allTime;
 };
 

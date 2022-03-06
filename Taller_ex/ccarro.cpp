@@ -2,7 +2,7 @@
 
 ccarro::ccarro()
 {
-   //ccarro("",0,eArea::ninguna);
+
 }
 
 ccarro::ccarro(ccarro & carro)
@@ -16,7 +16,8 @@ ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> areas):
     memcpy(m_matricula,matricula,TAM_MATRICULA) ;
     m_anno = anno;
     allTime = 0;
-    m_timeStart = false;
+    m_iniciaTiempo = false;
+    cout <<"creado carro "<<m_matricula<<endl;
 }
 
 ccarro::~ccarro()
