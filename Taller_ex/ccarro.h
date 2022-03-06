@@ -31,14 +31,11 @@ public:
     const char*   getMatricula() { return m_matricula; }
     std::vector<eArea>   getArea() { return m_area; }
 
+    void iniciaTiempo();
+    void setAllTime(){allTime += elapsedTime(tinicio);}
 
-
-    void iniciaTiempo(){if(!m_iniciaTiempo){m_iniciaTiempo = true; tinicio = std::chrono::system_clock::now();}}
-    void setAllTime(double t){allTime += getElapsedTime();}
-
-    double  getElapsedTime(){auto tfin = std::chrono::system_clock::now();
-                            return double(std::chrono::duration_cast<std::chrono::milliseconds>(tfin - tinicio).count());}
-    double getAllTime(){return  allTime;}
+    double getAllTime(){return allTime;}
+    double getTiempoArea(){return elapsedTime(tiniArea);}
 
 
 private:
@@ -47,9 +44,12 @@ private:
     int  m_anno;
     int  m_id;
 
-    std::chrono::system_clock::time_point tinicio;
+    std::chrono::system_clock::time_point tinicio, tiniArea;
     bool m_iniciaTiempo;
     double allTime;
+
+    double  elapsedTime(std::chrono::system_clock::time_point tini){auto tfin = std::chrono::system_clock::now();
+                            return double(std::chrono::duration_cast<std::chrono::milliseconds>(tfin - tini).count());}
 };
 
 #endif // CCARRO_H

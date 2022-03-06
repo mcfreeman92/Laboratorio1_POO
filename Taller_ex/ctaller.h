@@ -16,24 +16,20 @@ public:
     void insertar_empleado(shared_ptr<ceareaproductiva> &empleado);
     void insertar_empleado(shared_ptr<ceareaservicio> &empleado);
     bool insertar_carro(shared_ptr<ccarro> &carro);
-
     bool eliminar_empleado(int id);
     shared_ptr<ccarro> muestra_trabajos_carro_espera(const char *matricula);
     void muestra_tiempo_carro_taller(const char *matricula);
-    void muestra_tiempo_area_mas_demorada(const char *matricula);
     bool eliminar_carro_espera(const char *matricula);
 
-private slots:
-    void on_trabajo_terminado();
 private:
     char m_nombre[20];
     char m_direccion[40];
-
     std::vector<shared_ptr<cempleado>> empleados;
-    std::list<shared_ptr<ccarro>> areaEspera;
+    std::list<shared_ptr<ccarro>> areaEspera, carros;
 
     void muestra_empleados();
     void muestra_carros_espera();
+    void muestra_tiempo_area_mas_demorada();
     void muestra_areas(shared_ptr<ccarro> &carro);
     bool disponibilidad_trabajos(shared_ptr<ccarro> &carro);
     void inicia_trabajos(shared_ptr<ccarro> &carro);

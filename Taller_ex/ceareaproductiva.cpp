@@ -17,25 +17,28 @@ ceareaproductiva::ceareaproductiva(cempleado &e, eArea area)
 
 ceareaproductiva::ceareaproductiva(const char *nombre, int id, eArea area):
     m_carro(nullptr),
-    m_area(area)
+    m_area(area),
+    m_tdemora(0)
 {
     setId(id);
     setNombre(nombre);
     cout <<"creado empleado "<<getNombre()<< " area productiva"<<endl;
-    setReloj();
-    connect(getReloj(),SIGNAL(timeout()),this,SLOT(on_run()));
 }
 
 void ceareaproductiva::setCarro(shared_ptr<ccarro> carro)
 {
-   m_carro = carro;
-   m_carro.reset();
-   relojStart(5000);
+    m_carro = carro;
+    m_carro->iniciaTiempo();
+    QTimer::singleShot(5000, this, SLOT(termina()));
 }
 
-void ceareaproductiva::on_run()
+void ceareaproductiva::termina()
 {
-    relojStop();
+//    cout <<"copias "<<m_carro->getMatricula()<<"        "<<m_carro.use_count()<<endl;
+    m_carro->setAllTime();
+    double auxTiempo = m_carro->getTiempoArea();
+    if(m_tdemora < auxTiempo) m_tdemora = auxTiempo;
+    m_tdemora = m_carro->getTiempoArea();
     m_carro.reset();
     emit(s_trabajo_terminado());
 }

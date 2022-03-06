@@ -4,6 +4,7 @@
 #include "cempleado.h"
 #include "ccarro.h"
 #include <memory>
+#include <QTimer>
 
 using namespace std;
 
@@ -20,13 +21,13 @@ public:
 
     shared_ptr<ccarro> getCarro(){return m_carro;}
     eArea getArea(){return m_area;}
-
+    double getTiempoDemora(){return m_tdemora;}
 public slots:
-    void on_run();
-
+    void termina();
 private:
     shared_ptr<ccarro> m_carro;
     eArea m_area;
+    double m_tdemora;
 
 };
 

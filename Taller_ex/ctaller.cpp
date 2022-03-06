@@ -10,16 +10,25 @@ ctaller::ctaller(const char *nombre, const char *direccion)
 
 void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
 {
-//    ceareaproductiva *s = (ceareaproductiva*)empleado.get();;
-//    connect(s,SIGNAL(s_trabajo_terminado()),this,SLOT(on_trabajo_terminado()));
     connect(empleado.get(),&ceareaproductiva::s_trabajo_terminado,[&](){
-        auto carro = areaEspera.begin();
-        if(insertar_carro(*carro))
+        if(areaEspera.size()!=0)
         {
-            areaEspera.erase(carro);
-            muestra_carros_espera();
+            auto carro = areaEspera.begin();
+            if(insertar_carro(*carro))
+            {
+
+                areaEspera.erase(carro);
+                muestra_carros_espera();
+            }
         }
-        cout <<"TERMINADO & "<<endl;
+        else
+        {
+            muestra_tiempo_carro_taller("B12345");
+            muestra_tiempo_area_mas_demorada();
+            cout<<endl;
+
+        }
+
     });
     empleados.push_back(empleado);
 }
@@ -31,14 +40,21 @@ void ctaller::insertar_empleado(shared_ptr<ceareaservicio> &empleado)
 
 bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
 {
+
+    auto it = find(carros.cbegin(),carros.cend(),carro);
+    if(it == carros.end())
+    {
+        carros.push_back(carro);
+    }
+
     if(!disponibilidad_trabajos(carro))
     {
         auto it = find(areaEspera.cbegin(),areaEspera.cend(),carro);
         if(it == areaEspera.end())
         {
-           areaEspera.push_back(carro);
-           cout <<"carro "<<carro->getMatricula()<<" en espera..."<<endl;
-         }
+            areaEspera.push_back(carro);
+            cout <<"carro "<<carro->getMatricula()<<" en espera..."<<endl;
+        }
         else
             cout <<"carro "<<carro->getMatricula()<<" sigue espera..."<<endl;
         return true;
@@ -92,12 +108,18 @@ shared_ptr<ccarro> ctaller::muestra_trabajos_carro_espera(const char *matricula)
 
 void ctaller::muestra_tiempo_carro_taller(const char *matricula)
 {
-
+    for(auto it: carros)
+        if(*it->getMatricula() == *matricula)
+            cout<<"carro "<<it->getMatricula()<<" tiempo en taller "<<it->getAllTime()<<endl;
 }
 
-void ctaller::muestra_tiempo_area_mas_demorada(const char *matricula)
+void ctaller::muestra_tiempo_area_mas_demorada()
 {
-
+    for (auto it : empleados)
+    {
+        ceareaproductiva *e = (ceareaproductiva*)it.get();
+         cout<<"area demorada "<< e->getTiempoDemora()<<" area "<<e->getArea()<<endl;
+}
 }
 
 bool ctaller::eliminar_carro_espera(const char *matricula)
@@ -115,11 +137,6 @@ bool ctaller::eliminar_carro_espera(const char *matricula)
     }
     cout <<"carro "<<matricula<< " eliminado BAD"<<endl;
     return false;
-}
-
-void ctaller::on_trabajo_terminado()
-{
-    cout <<"TERMINADO "<<endl;
 }
 
 void ctaller::muestra_empleados()

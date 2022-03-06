@@ -7,7 +7,7 @@ ccarro::ccarro()
 
 ccarro::ccarro(ccarro & carro)
 {
-     ccarro(carro.getMatricula(),carro.getAnno(),carro.getArea());
+    ccarro(carro.getMatricula(),carro.getAnno(),carro.getArea());
 }
 
 ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> areas):
@@ -15,7 +15,7 @@ ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> areas):
 {
     memcpy(m_matricula,matricula,TAM_MATRICULA) ;
     m_anno = anno;
-    allTime = 0;
+    allTime = 0;    
     m_iniciaTiempo = false;
     cout <<"creado carro "<<m_matricula<<endl;
 }
@@ -24,3 +24,14 @@ ccarro::~ccarro()
 {
     cout <<"carro "<<m_matricula<<" destruido"<<endl;
 }
+
+void ccarro::iniciaTiempo()
+{
+    if(!m_iniciaTiempo)
+    {
+        m_iniciaTiempo = true;
+        tinicio = std::chrono::system_clock::now();
+    }
+    tiniArea = std::chrono::system_clock::now();
+}
+
