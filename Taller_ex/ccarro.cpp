@@ -13,6 +13,7 @@ ccarro::ccarro(ccarro & carro)
 ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> &areas):
     m_area(0),
     m_anno(anno),
+    m_id(0),
     m_iniciaTiempo(false),
     m_allTime(0)
 

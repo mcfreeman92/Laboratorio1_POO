@@ -2,13 +2,14 @@
 #include <QDebug>
 #include <QThread>
 #include "ctaller.h"
-#include "crepoempleado.h"
+#include "crepocarro.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
     ctaller taller("bartolete","playa");
+    crepocarro repo;
 
     shared_ptr<ceareaproductiva> e1= make_shared<ceareaproductiva>("pintor",1,eArea::pintura);
     shared_ptr<ceareaproductiva> e2= make_shared<ceareaproductiva>("electrico",2,eArea::electrica);
@@ -23,18 +24,18 @@ int main(int argc, char *argv[])
     shared_ptr<ccarro> carro2 = make_shared<ccarro>("P22344",2020,trabajos2);
     shared_ptr<ccarro> carro3 = make_shared<ccarro>("P44322",1992,trabajos3);
 
+//    repo.insertar(carro1);
+//    repo.insertar(carro2);
+//    repo.insertar(carro3);
 
-    crepoempleado repo;
-    repo.insertar(*carro1.get());
-    repo.insertar(*carro2.get());
-    repo.insertar(*carro3.get());
+    shared_ptr<ccarro> carro4 = repo.buscar(1);
 
     taller.insertar_empleado(e1);
     taller.insertar_empleado(e2);
     taller.insertar_empleado(e3);
     taller.insertar_empleado(e4);
 
-    taller.eliminar_empleado(3);
+    taller.eliminar_empleado(2);
 
     taller.insertar_carro(carro1);
     taller.insertar_carro(carro2);

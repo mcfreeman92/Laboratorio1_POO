@@ -21,7 +21,7 @@ class ccarro
 public:
     ccarro();
     ccarro(ccarro &);
-    ccarro(const char *matricula = "", int anno = 0, const std::vector<eArea> &areas = {});
+    ccarro(const char *matricula, int anno, const std::vector<eArea> &areas);
     ~ccarro();
 
     void setMatricula(const char *matricula) { memcpy(m_matricula,matricula,TAM_MATRICULA); }
@@ -41,7 +41,7 @@ public:
 
 
 private:
-    unsigned char m_area;
+    unsigned short m_area;
     char m_matricula[TAM_MATRICULA];
     int  m_anno;
     int  m_id;
