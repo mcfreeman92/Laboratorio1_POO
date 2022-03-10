@@ -3,42 +3,31 @@
 
 crepocarro::crepocarro():m_filename("carros.rep")
 {
-//    ccarro carro;
-//    std::ofstream f(m_filename, std::ios::binary);
-//    if(!f)
-//    {
-//        std::cerr<<"El archivo no se puede abrir";
-//    }
-//    else
-//    {
-//        for (int i = 0 ; i < 200; ++i) {
-//          f.write(reinterpret_cast<char *>(&carro),sizeof (ccarro));}
-//    }
-//    f.close();
+
 }
 
 void crepocarro::insertar(std::shared_ptr<ccarro> carro)
 {
     carro->setId(generaID());
-    std::ofstream f(m_filename, std::ios::binary);
+    std::ofstream f(m_filename, std::ios::binary | std::ios::app);
     if(!f)
     {
         std::cerr<<"El archivo no se puede abrir";
     }
     else
     {
-        f.seekp(sizeof (carro));
-          f.write(reinterpret_cast<char *>(&carro),sizeof (ccarro));
+        int id = carro.get()->getId();
+        std::cout<<id<<" "<<sizeof (ccarro);
+          f.seekp((carro->getId()-1)*sizeof (ccarro));
+          f.write(reinterpret_cast<char *>(&*carro),sizeof(ccarro));
     }
     f.close();
 
-    std::cout<<sizeof (ccarro);
-    generaID();
 }
 
 shared_ptr<ccarro> crepocarro::buscar(int id)
 {
-    shared_ptr<ccarro> carro;
+    ccarro carro;
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
     if(!f)
     {
@@ -46,11 +35,11 @@ shared_ptr<ccarro> crepocarro::buscar(int id)
     }
     else
     {
-          f.seekp(id * sizeof (ccarro));
-          f.read(reinterpret_cast<char *>(&carro),sizeof (ccarro));
+          f.seekg((id-1)*sizeof (ccarro));
+          f.read((char*)(&carro),sizeof (ccarro));
     }
     f.close();
-    return carro;
+    return make_shared<ccarro>(carro.getMatricula(),carro.getAnno(),carro.getArea(),carro.getId());
 }
 
 int crepocarro::generaID()
@@ -59,8 +48,9 @@ int crepocarro::generaID()
     if (stat(m_filename, &sb) == -1) {
         perror("stat");
     }
-    std::cout<<sb.st_size;
+
     int id = sb.st_size/sizeof (ccarro);
     id++;
+
     return id;
 }

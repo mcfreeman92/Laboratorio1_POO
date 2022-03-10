@@ -28,14 +28,14 @@ int main(int argc, char *argv[])
 //    repo.insertar(carro2);
 //    repo.insertar(carro3);
 
-    shared_ptr<ccarro> carro4 = repo.buscar(1);
+    shared_ptr<ccarro> carro4 = repo.buscar(2);
 
     taller.insertar_empleado(e1);
     taller.insertar_empleado(e2);
     taller.insertar_empleado(e3);
     taller.insertar_empleado(e4);
 
-    taller.eliminar_empleado(2);
+    taller.eliminar_empleado(6);
 
     taller.insertar_carro(carro1);
     taller.insertar_carro(carro2);

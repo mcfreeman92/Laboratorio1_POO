@@ -8,12 +8,13 @@ ccarro::ccarro()
 ccarro::ccarro(ccarro & carro)
 {
     ccarro(carro.getMatricula(),carro.getAnno(),carro.getArea());
+    m_id = carro.getId();
 }
 
-ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> &areas):
+ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> &areas, int id):
     m_area(0),
     m_anno(anno),
-    m_id(0),
+    m_id(id),
     m_iniciaTiempo(false),
     m_allTime(0)
 
