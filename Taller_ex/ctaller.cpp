@@ -4,28 +4,66 @@ ctaller::ctaller(const char *nombre, const char *direccion)
 {
     memcpy(m_nombre,nombre,20) ;
     memcpy(m_direccion,direccion,40) ;
-
+    m_tiempo_ini = tiempo_hora_actual();
     cout << "Taller: "<< m_nombre <<"   Direccion: "<< m_direccion <<endl;
+}
+
+const char* ctaller::areaToStr(eArea a)
+{
+    const char * str = nullptr;
+    switch (a) {
+    case 1:
+        str = "mecanica";
+        break;
+    case 2:
+        str = "pintura";
+        break;
+    case 4:
+        str = "electronica";
+        break;
+    }
+    return str;
+}
+
+string ctaller::tiempo_hora_actual()
+{
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
+    return ss.str();
 }
 
 void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
 {
-    connect(empleado.get(),&ceareaproductiva::s_trabajo_terminado,[&](){
-        if(areaEspera.size()!=0)
+    //creo conexion para indicar que el empleado terminó su trabajo
+    connect(empleado.get(),&ceareaproductiva::s_trabajo_terminado,[&]()
+    {
+        if(areaEspera.size()!=0) //pregunto si es el ultimo carro en espera
         {
             auto carro = areaEspera.begin();
-            if(insertar_carro(*carro))
+            if(insertar_carro(*carro)) //si entra al trabajo
             {
-
-                areaEspera.erase(carro);
-                muestra_carros_espera();
+                areaEspera.erase(carro); //borro el carro de la lista
+                //                muestra_carros_espera();
             }
         }
         else
         {
-            muestra_tiempo_carro_taller("B12345");
-            muestra_tiempo_area_mas_demorada();
-            cout<<endl;
+
+            if(termine_trabajos())
+            {
+                cout<<"generando reporte ..."<<endl;
+                muestra_tiempo_carro_taller("P44322");
+                muestra_tiempo_area_mas_demorada();
+                m_tiempo_fin = tiempo_hora_actual();
+                generar_reporte();
+                exit(1);
+
+
+
+
+            }
 
         }
 
@@ -41,11 +79,14 @@ void ctaller::insertar_empleado(shared_ptr<ceareaservicio> &empleado)
 bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
 {
 
+    // inserto un carro si no existe en la lista
     auto it = find(carros.cbegin(),carros.cend(),carro);
     if(it == carros.end())
     {
         carros.push_back(carro);
     }
+    //-----------------------------------
+
 
     if(!disponibilidad_trabajos(carro))
     {
@@ -57,12 +98,12 @@ bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
         }
         else
             cout <<"carro "<<carro->getMatricula()<<" sigue espera..."<<endl;
-        return true;
+        return false;
     }
     else
     {
         inicia_trabajos(carro);
-        return false;
+        return true;
     }
 
 }
@@ -109,17 +150,25 @@ shared_ptr<ccarro> ctaller::muestra_trabajos_carro_espera(const char *matricula)
 void ctaller::muestra_tiempo_carro_taller(const char *matricula)
 {
     for(auto it: carros)
-        if(*it->getMatricula() == *matricula)
-            cout<<"carro "<<it->getMatricula()<<" tiempo en taller "<<it->getAllTime()<<endl;
+        if((*it->getMatricula() == *matricula))
+            cout<<"carro "<<it->getMatricula()<<" tiempo en taller "<<it->getAllTime()<< " "<<it.use_count()<<endl;
 }
 
 void ctaller::muestra_tiempo_area_mas_demorada()
 {
-    for (auto it : empleados)
+    auto eAux = ((ceareaproductiva*)empleados.begin()->get());
+    for (auto e: empleados )
     {
-        ceareaproductiva *e = (ceareaproductiva*)it.get();
-         cout<<"area demorada "<< e->getTiempoDemora()<<" area "<<e->getArea()<<endl;
-}
+
+        if(typeid(*e) == typeid(ceareaproductiva))
+        {
+            ceareaproductiva *eap = (ceareaproductiva*)e.get();
+            cout<<"area demorada "<< eap->getTiempoDemora()<<" area "<<eap->getArea()<<endl;
+            if((eap->getTiempoDemora() > eAux->getTiempoDemora()))
+                eAux = eap;
+        }
+    }
+    cout<<" esta es el  area mas demorada "<< eAux->getTiempoDemora()<<" area "<<eAux->getArea()<<endl;
 }
 
 bool ctaller::eliminar_carro_espera(const char *matricula)
@@ -174,7 +223,7 @@ bool ctaller::disponibilidad_trabajos(shared_ptr<ccarro> &carro)
             {
                 ceareaproductiva *eap = (ceareaproductiva*)e.get();
                 if((eap->getArea() == a))
-                    if(!(eap->getCarro() == nullptr))
+                    if(eap->getCarro() != nullptr)
                     {
                         return false;
                     }
@@ -205,3 +254,54 @@ void ctaller::inicia_trabajos(shared_ptr<ccarro> &carro)
     }
 }
 
+void ctaller::generar_reporte()
+{
+    ofstream f;
+    string nombreF = "reporte_taller.txt";
+    f.open (nombreF, ios::out /*| ios::app*/ );
+    f << " <<<< Reporte del Taller: "<<m_nombre<<" >>>>"<<endl;
+    f <<endl;
+    f << " Inicio de trabajos: "<<m_tiempo_ini<<endl;
+    f <<endl;
+    f << "|------- Empleados -------|"<<endl;
+    f << "Total de empleados: "<<empleados.size() <<endl;
+    for(auto e: empleados)
+    {
+        f <<e->getId() <<" -> "<< e->getNombre()<<endl;
+        if(typeid(*e) == typeid(ceareaproductiva))
+        {
+            ceareaproductiva *eap = (ceareaproductiva*)e.get();
+            f<<"Area "<< areaToStr(eap->getArea())<<" tiempo mas malo "<< eap->getTiempoDemora()<<endl;
+        }
+    }
+    f <<endl;f <<endl;
+    f << "|------- Carros -------|"<<endl;
+    f << "Total de Carros: "<<carros.size() <<endl;
+    for(auto c: carros)
+    {
+        f <<c->getMatricula() <<" -> "<< c->getAnno()<<" (";
+        for(auto t: c.get()->getArea())
+            f <<" "<< areaToStr(t);
+        f <<" ) "<<endl;
+        f <<"Tiempo total en taller: "<<c->getAllTime()<<endl;
+    }
+    f <<endl;
+    f << " Fin de trabajos: "<<m_tiempo_fin<<endl;
+    f.close();
+}
+
+bool ctaller::termine_trabajos()
+{
+    for(auto e: empleados)
+    {
+        if(typeid(*e.get()) == typeid(ceareaproductiva))
+        {
+            ceareaproductiva *eap = (ceareaproductiva*)e.get();
+            if(eap->getCarro() != nullptr)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}

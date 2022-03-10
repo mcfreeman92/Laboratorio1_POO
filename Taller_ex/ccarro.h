@@ -11,9 +11,9 @@ using namespace std;
 
 enum eArea
 {
-   mecanica = 1,
-   pintura = 2,
-   electrica = 3
+   mecanica = 1,//0001
+   pintura = 2,//0010
+   electrica = 4//0100
 };
 
 class ccarro
@@ -21,32 +21,34 @@ class ccarro
 public:
     ccarro();
     ccarro(ccarro &);
-    ccarro(const char *matricula, int anno,const std::vector<eArea> areas);
+    ccarro(const char *matricula = "", int anno = 0, const std::vector<eArea> &areas = {});
     ~ccarro();
 
-    void setMatricula(char *matricula) { memcpy(m_matricula,matricula,TAM_MATRICULA); }
+    void setMatricula(const char *matricula) { memcpy(m_matricula,matricula,TAM_MATRICULA); }
     void setAnno(int anno) { m_anno = anno; }
+    void setId(int id) { m_id = id; }
 
     int     getAnno() { return m_anno; }
+    int     getId() { return m_id; }
     const char*   getMatricula() { return m_matricula; }
-    std::vector<eArea>   getArea() { return m_area; }
+    std::vector<eArea>   getArea();
 
     void iniciaTiempo();
-    void setAllTime(){allTime += elapsedTime(tinicio);}
+    void setAllTime(){m_allTime += elapsedTime(m_tinicio);}
 
-    double getAllTime(){return allTime;}
-    double getTiempoArea(){return elapsedTime(tiniArea);}
+    double getAllTime(){return m_allTime;}
+    double getTiempoArea(){return elapsedTime(m_tiniArea);}
 
 
 private:
-    std::vector<eArea> m_area;
+    unsigned char m_area;
     char m_matricula[TAM_MATRICULA];
     int  m_anno;
     int  m_id;
 
-    std::chrono::system_clock::time_point tinicio, tiniArea;
+    std::chrono::system_clock::time_point m_tinicio, m_tiniArea;
     bool m_iniciaTiempo;
-    double allTime;
+    double m_allTime;
 
     double  elapsedTime(std::chrono::system_clock::time_point tini){auto tfin = std::chrono::system_clock::now();
                             return double(std::chrono::duration_cast<std::chrono::milliseconds>(tfin - tini).count());}

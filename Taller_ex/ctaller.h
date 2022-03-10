@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <typeinfo>
+#include <iostream>
+#include <fstream>
+#include <ctime>   // localtime
+#include <sstream> // stringstream
+#include <iomanip> // put_time
 #include "ceareaproductiva.h"
 #include "ceareaservicio.h"
 
@@ -26,6 +31,7 @@ private:
     char m_direccion[40];
     std::vector<shared_ptr<cempleado>> empleados;
     std::list<shared_ptr<ccarro>> areaEspera, carros;
+    std::string m_tiempo_ini, m_tiempo_fin;
 
     void muestra_empleados();
     void muestra_carros_espera();
@@ -34,6 +40,11 @@ private:
     bool disponibilidad_trabajos(shared_ptr<ccarro> &carro);
     void inicia_trabajos(shared_ptr<ccarro> &carro);
 
+    void generar_reporte();
+    bool termine_trabajos();
+
+    const char *areaToStr(eArea a);    
+    std::string tiempo_hora_actual();
 };
 
 #endif // CTALLER_H

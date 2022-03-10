@@ -8,11 +8,11 @@ cempleado::cempleado()
 cempleado::cempleado(cempleado &e) :
     m_id(e.getId())
 {
-    memcpy(m_nombre,e.getNombre(),TAM_NOMBRE);
+     setNombre(e.getNombre());
 }
 
-cempleado::cempleado(const char *nombre, int id)
+cempleado::cempleado(const char *nombre, int id):
+    m_id(id)
 {
-    memcpy(m_nombre,nombre,TAM_NOMBRE);
-    m_id = id;
+    setNombre(nombre);
 }

@@ -10,12 +10,11 @@ using namespace std;
 
 class ceareaproductiva : public cempleado
 {
-
 public:
     ceareaproductiva();
     ~ceareaproductiva();
     ceareaproductiva(cempleado &e, eArea area);
-    ceareaproductiva(const char *nombre, int id, eArea area);
+    ceareaproductiva(const char *nombre = "", int id = 0, eArea area = (eArea)0);
 
     void setCarro(shared_ptr<ccarro> carro);
 

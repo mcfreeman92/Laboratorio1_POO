@@ -18,6 +18,7 @@ SOURCES += \
         ccarro.cpp \
         ceareaproductiva.cpp \
         ceareaservicio.cpp \
+        crepoempleado.cpp \
         ctaller.cpp \
         cempleado.cpp \
         main.cpp
@@ -26,6 +27,7 @@ HEADERS += \
         ccarro.h \
         ceareaproductiva.h \
         ceareaservicio.h \
+        crepoempleado.h \
         ctaller.h \
         cempleado.h
 

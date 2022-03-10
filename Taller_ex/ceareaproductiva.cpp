@@ -34,7 +34,6 @@ void ceareaproductiva::setCarro(shared_ptr<ccarro> carro)
 
 void ceareaproductiva::termina()
 {
-//    cout <<"copias "<<m_carro->getMatricula()<<"        "<<m_carro.use_count()<<endl;
     m_carro->setAllTime();
     double auxTiempo = m_carro->getTiempoArea();
     if(m_tdemora < auxTiempo) m_tdemora = auxTiempo;
