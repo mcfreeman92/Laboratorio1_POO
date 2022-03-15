@@ -5,10 +5,10 @@ ccarro::ccarro()
 
 }
 
-ccarro::ccarro(ccarro & carro)
+ccarro::ccarro(ccarro * carro)
 {
-    ccarro(carro.getMatricula(),carro.getAnno(),carro.getArea());
-    m_id = carro.getId();
+    ccarro(carro->getMatricula(),carro->getAnno(),carro->getArea());
+    m_id = carro->getId();
 }
 
 ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> &areas, int id):
@@ -25,15 +25,15 @@ ccarro::ccarro(const char *matricula, int anno, const std::vector<eArea> &areas,
        m_area |= (unsigned short)area;
     }
 
-    cout <<"AREA BIN "<<m_area<<endl;
+//    cout <<"AREA BIN "<<m_area<<endl;
 
     setMatricula(matricula);
-    cout <<"creado carro "<<m_matricula<<endl;
+//    cout <<"creado carro "<<m_matricula<<endl;
 }
 
 ccarro::~ccarro()
 {
-    cout <<"carro "<<m_matricula<<" destruido"<<endl;
+//    cout <<"carro "<<m_matricula<<" destruido"<<endl;
 }
 
 std::vector<eArea> ccarro::getArea()

@@ -17,13 +17,16 @@ class crepocarro : public QObject
     Q_OBJECT
 public:
      crepocarro();
-     void insertar(std::shared_ptr<ccarro> carro);
-     void eliminar();
-     void modificar();
-     shared_ptr<ccarro> buscar(int id = 1);
+     bool insertar(shared_ptr<ccarro> &carro);
+     bool eliminar(int id);
+     bool modificar(shared_ptr<ccarro> &carro);
+     std::list<shared_ptr<ccarro>> leerTodo();
+     bool checkExiste(int id);
 
 private:
-    int generaID();
+    int generaID(bool b = false);
+    int tam_fichero();
+    int m_sum;
     const char * m_filename;
 };
 

@@ -20,7 +20,7 @@ class ccarro
 {
 public:
     ccarro();
-    ccarro(ccarro &);
+    ccarro(ccarro *);
     ccarro(const char *matricula, int anno, const std::vector<eArea> &areas, int id=0);
     ~ccarro();
 
@@ -38,7 +38,6 @@ public:
 
     double getAllTime(){return m_allTime;}
     double getTiempoArea(){return elapsedTime(m_tiniArea);}
-
 
 private:
     unsigned short m_area;
