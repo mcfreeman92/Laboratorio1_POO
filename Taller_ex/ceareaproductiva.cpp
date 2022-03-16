@@ -1,10 +1,5 @@
 #include "ceareaproductiva.h"
 
-ceareaproductiva::ceareaproductiva()
-{
-
-}
-
 ceareaproductiva::~ceareaproductiva()
 {
     cout <<"empleado "<<getNombre()<<" destruido"<<endl;
@@ -12,7 +7,7 @@ ceareaproductiva::~ceareaproductiva()
 
 ceareaproductiva::ceareaproductiva(cempleado &e, eArea area)
 {
-    ceareaproductiva(e.getNombre(),e.getId(),m_area);
+    ceareaproductiva(e.getNombre(),e.getDNI(),m_area);
 }
 
 ceareaproductiva::ceareaproductiva(const char *nombre, int id, eArea area):
@@ -20,7 +15,7 @@ ceareaproductiva::ceareaproductiva(const char *nombre, int id, eArea area):
     m_area(area),
     m_tdemora(0)
 {
-    setId(id);
+    setDNI(id);
     setNombre(nombre);
     cout <<"creado empleado "<<getNombre()<< " area productiva"<<endl;
 }

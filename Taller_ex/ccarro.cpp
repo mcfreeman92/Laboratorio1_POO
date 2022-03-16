@@ -1,10 +1,5 @@
 #include "ccarro.h"
 
-ccarro::ccarro()
-{
-
-}
-
 ccarro::ccarro(ccarro * carro)
 {
     ccarro(carro->getMatricula(),carro->getAnno(),carro->getArea());

@@ -21,12 +21,11 @@ public:
      bool eliminar(int id);
      bool modificar(shared_ptr<ccarro> &carro);
      std::list<shared_ptr<ccarro>> leerTodo();
-     bool checkExiste(int id);
+     bool buscar(int id);
 
 private:
-    int generaID(bool b = false);
+    int generaID();
     int tam_fichero();
-    int m_sum;
     const char * m_filename;
 };
 

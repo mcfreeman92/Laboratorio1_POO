@@ -113,7 +113,7 @@ bool ctaller::eliminar_empleado(int id)
     for (auto it = empleados.begin(); it != empleados.end(); it++)
     {
         shared_ptr<cempleado>e = *it;
-        if(e->getId() == id)
+        if(e->getDNI() == id)
         {
             if(typeid(*e.get()) == typeid(ceareaproductiva))
             {
@@ -267,7 +267,7 @@ void ctaller::generar_reporte()
     f << "Total de empleados: "<<empleados.size() <<endl;
     for(auto e: empleados)
     {
-        f <<e->getId() <<" -> "<< e->getNombre()<<endl;
+        f <<e->getDNI() <<" -> "<< e->getNombre()<<endl;
         if(typeid(*e) == typeid(ceareaproductiva))
         {
             ceareaproductiva *eap = (ceareaproductiva*)e.get();

@@ -1,14 +1,14 @@
 #include "crepocarro.h"
 #include "ccarro.h"
 
-crepocarro::crepocarro():m_sum(0),m_filename("carros.rep")
+crepocarro::crepocarro():m_filename("carros.rep")
 {
 
 }
 
 bool crepocarro::insertar(shared_ptr<ccarro> &carro)
 {
-    int id = generaID(true);
+    int id = generaID();
 
     carro->setId(id);
 
@@ -29,7 +29,7 @@ bool crepocarro::insertar(shared_ptr<ccarro> &carro)
 
 bool crepocarro::eliminar(int id)
 {
-    ccarro carro("",0,{},0);
+    ccarro carro;
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
     if(!f)
     {
@@ -66,7 +66,6 @@ std::list<shared_ptr<ccarro> > crepocarro::leerTodo()
 {
     std::list<shared_ptr<ccarro>> list_carros;
     ccarro carro;
-//    ccarro carro("",0,{},0);
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
     if(!f)
     {
@@ -76,7 +75,7 @@ std::list<shared_ptr<ccarro> > crepocarro::leerTodo()
     {
         int id = 0;
         while (!(f.eof()))
-         {
+        {
             f.seekg((id++)*sizeof (ccarro));
             f.read(reinterpret_cast<char*>(&carro),sizeof (ccarro));
             if(carro.getId() != 0)
@@ -91,7 +90,7 @@ std::list<shared_ptr<ccarro> > crepocarro::leerTodo()
     return  list_carros;
 }
 
-bool crepocarro::checkExiste(int id)
+bool crepocarro::buscar(int id)
 {
     ccarro carro;
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
@@ -114,16 +113,11 @@ bool crepocarro::checkExiste(int id)
         return false;
 }
 
-int crepocarro::generaID(bool b)
+int crepocarro::generaID()
 {
-    if(b)
-    {
-        int tam_f = tam_fichero()/sizeof (ccarro);
-        tam_f++;
-        return tam_f;
-    }
-    else
-        return ++m_sum;
+    int tam_f = tam_fichero()/sizeof (ccarro);
+    tam_f++;
+    return tam_f;
 }
 
 int crepocarro::tam_fichero()

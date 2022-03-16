@@ -13,13 +13,15 @@ class cempleado : public QObject
 public:
     cempleado();
     cempleado(cempleado &e);
-    cempleado(const char *nombre, int id);
+    cempleado(const char *nombre, int dni, int id);
 
     void setNombre(const char* nombre) { memcpy(m_nombre,nombre,TAM_NOMBRE); }
+    void setDNI(int dni) { m_dni = dni; }
     void setId(int id) { m_id = id; }
 
-    int   getId() { return m_id; }
+    int   getDNI() { return m_dni; }
     char* getNombre() { return m_nombre;}
+    int   getId() { return m_id;}
 
 public slots:
     virtual void termina() =0;
@@ -29,7 +31,7 @@ signals:
 
 private:
     char  m_nombre[TAM_NOMBRE];
-    int   m_id;
+    int   m_dni, m_id;
 
 };
 
