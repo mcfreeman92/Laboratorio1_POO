@@ -6,11 +6,11 @@ cProfesor::~cProfesor()
 
 cProfesor::cProfesor(Persona & e, float creditos)
 {
-    cProfesor(e.getNombre(),e.getEdad(),e.getId(),creditos);
+    cProfesor(e.getNombre(),e.getEdad(),e.getId(),e.getIdBD(),creditos);
 }
 
-cProfesor::cProfesor(const char * nombre, int edad, int ID, float creditos) :
-    Persona(nombre,edad,ID),
+cProfesor::cProfesor(const char * nombre, int edad, int ID, int idBD, float creditos) :
+    Persona(nombre,edad,ID,idBD),
     m_credito(creditos)
 {
 

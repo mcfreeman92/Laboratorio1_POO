@@ -1,7 +1,8 @@
 #include "estudiante.h"
 
 
-cEstudiante::cEstudiante(const char * nombre, int edad, int ID, float notaFinal) : Persona(nombre,edad,ID)
+cEstudiante::cEstudiante(const char * nombre, int edad, int ID, int idBD, float notaFinal) :
+    Persona(nombre,edad,ID,idBD)
 {
     m_notaFinal = notaFinal;
 }

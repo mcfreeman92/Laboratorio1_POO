@@ -20,9 +20,9 @@ SOURCES += \
         main.cpp \
         persona.cpp \
     profesor.cpp \
-        repoempleado.cpp \
-        repouniversitario.cpp \
+       # repouniversitario.cpp \
  \        #universitario.cpp
+    repoprofesor.cpp \
     secretaria.cpp
 
 # Default rules for deployment.
@@ -35,7 +35,7 @@ HEADERS += \
     estudiante.h \
     persona.h \
     profesor.h \
-    repoempleado.h \
-    repouniversitario.h \
+   # repouniversitario.h \
  \    #universitario.h
+    repoprofesor.h \
     secretaria.h

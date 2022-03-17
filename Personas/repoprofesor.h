@@ -7,11 +7,9 @@
 #include <fstream> // flujo de archivo
 #include <memory>
 #include <sys/stat.h>
-#include "universitario.h"
-#include "estudiante.h"
 #include "profesor.h"
 
-class RepoEmpleado : public QObject
+class RepoProfesor : public QObject
 {
     Q_OBJECT
 private:
@@ -21,16 +19,15 @@ private:
     int tam_fichero();
 
 
+    int generaID();
 public:
-    RepoEmpleado();
+    RepoProfesor();
 
-    void insertar_empleado(shared_ptr<cProfesor> &empleado);
-    bool guardarEmpleados(shared_ptr<cProfesor> &empleado);
-    list<shared_ptr<cProfesor> > leerEmpleados();
-
+    bool insertar(shared_ptr<cProfesor> &profe);
     bool eliminar(int id);
-    bool modificar(shared_ptr<cProfesor> &empleado);
-signals:
+    bool existe();
+    bool modificar(shared_ptr<cProfesor> &profe);
+    std::list<shared_ptr<cProfesor>> leerTodo();
 
 };
 

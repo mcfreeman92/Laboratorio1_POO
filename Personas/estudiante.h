@@ -11,7 +11,7 @@ private:
     float m_notaFinal;
 
 public:
-    cEstudiante(const char * nombre, int edad,int ID, float notaFinal );
+    cEstudiante(const char * nombre, int edad, int ID, int idBD, float notaFinal );
     float getNotaFinal(){return m_notaFinal;};
     void  setNotaFinal(float notaFinal){notaFinal = m_notaFinal;};
     void mostrar();

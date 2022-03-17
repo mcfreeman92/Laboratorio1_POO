@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 #include "estudiante.h"
 #include "profesor.h"
-#include "repoempleado.h"
+#include "repoprofesor.h"
 #include "repouniversitario.h"
 
 class cSecretaria : public QObject

@@ -15,7 +15,7 @@ private:
 public:
     ~cProfesor();
     cProfesor(Persona &, float creditos);
-    cProfesor(const char *nombre = "", int edad = 0, int ID = 0, float creditos= 0.0f);
+    cProfesor(const char *nombre = "", int edad = 0, int ID = 0, int idBD = 0, float creditos= 0.0f);
 
     void  setCredito(float credito){m_credito = credito;};
     void  setEstudiante(shared_ptr<cEstudiante> estudiante){m_estudiante = estudiante;};
