@@ -2,7 +2,12 @@
 
 cSecretaria::cSecretaria() : m_filename("empleados.rep")
 {
-    //cout<<m_filename<<endl;
+    if(m_repProfe.existe())
+    {
+       std::list<shared_ptr<cProfesor>> lista_prof = m_repProfe.leerTodo();
+       for(auto p:lista_prof)
+           insertar_persona(p);
+    }
 }
 
 void cSecretaria::insertar_persona(shared_ptr<cProfesor> &profesor)
@@ -21,6 +26,7 @@ void cSecretaria::eliminar_persona(int id)
         shared_ptr<Persona> persona = *it;
         if(persona->getId() == id)
         {
+            if(typeid(*it) == typeid(cProfesor)) m_repProfe.eliminar(((cProfesor*)persona.get())->getIdBD());
             persona.reset();
             personas.erase(it);
             break;

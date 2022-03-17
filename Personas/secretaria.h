@@ -19,7 +19,7 @@ class cSecretaria : public QObject
 private:
     std::list<shared_ptr<Persona>> personas;
     const char *m_filename;
-
+    RepoProfesor m_repProfe;
 public:
     cSecretaria();
 
