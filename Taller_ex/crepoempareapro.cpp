@@ -8,10 +8,6 @@ crepoempareapro::crepoempareapro(): m_filename("empleadoAP.rep")
 
 bool crepoempareapro::insertar(shared_ptr<ceareaproductiva> &empl)
 {
-    int id = generaID();
-
-    empl->setId(id);
-
     std::ofstream f(m_filename, std::ios::binary | std::ios::app);
     if(!f)
     {
@@ -20,6 +16,8 @@ bool crepoempareapro::insertar(shared_ptr<ceareaproductiva> &empl)
     }
     else
     {
+        int id = generaID();
+        empl->setId(id);
         f.seekp((id-1)*sizeof (ceareaproductiva));
         f.write(reinterpret_cast<char *>(&*empl),sizeof(ceareaproductiva));
     }
@@ -29,7 +27,6 @@ bool crepoempareapro::insertar(shared_ptr<ceareaproductiva> &empl)
 
 bool crepoempareapro::eliminar(int id)
 {
-    ceareaproductiva empl;
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
     if(!f)
     {
@@ -38,6 +35,7 @@ bool crepoempareapro::eliminar(int id)
     }
     else
     {
+        ceareaproductiva empl;
         f.seekp((id-1)*sizeof (ceareaproductiva));
         f.write(reinterpret_cast<char*>(&empl),sizeof (ceareaproductiva));
     }
@@ -65,29 +63,32 @@ bool crepoempareapro::modificar(shared_ptr<ceareaproductiva> &empl)
 std::vector<shared_ptr<cempleado> > crepoempareapro::leerTodo()
 {
     std::vector<shared_ptr<cempleado> > list_empleadosAP;
-    ceareaproductiva empl;
     std::fstream f(m_filename, std::ios::binary | std::ios::out | std::ios::in);
     if(!f)
     {
-        std::cerr<<"El archivo no se puede abrir";
+        std::cerr<<"El archivo no se puede abrir"<<endl;
     }
     else
     {
         int id = 0;
         while (!(f.eof()))
         {
+            ceareaproductiva *empl = new ceareaproductiva();
             f.seekg((id++)*sizeof (ceareaproductiva));
-            f.read(reinterpret_cast<char*>(&empl),sizeof (ceareaproductiva));
-            if(empl.getId() != 0)
+            f.read(reinterpret_cast<char*>(&*empl),sizeof (ceareaproductiva));
+            if(empl->getId() != 0)
             {
-                list_empleadosAP.push_back(make_shared<ceareaproductiva>(empl));
-                cout<<empl.getId()<<" -> "<<empl.getNombre()<<" "<<empl.getArea()<<endl;
+//                list_empleadosAP.push_back(make_shared<ceareaproductiva>(empl));
+                cout<<empl->getId()<<" -> "<<empl->getNombre()<<" "<<empl->getArea()<<endl;
             }
             f.peek();
+            delete empl;
+
         }
+
+
     }
     f.close();
-
     return list_empleadosAP;
 }
 

@@ -1,6 +1,6 @@
 #include "cempleado.h"
 
-cempleado::cempleado()
+cempleado::~cempleado()
 {
 
 }

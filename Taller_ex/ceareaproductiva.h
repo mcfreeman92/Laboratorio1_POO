@@ -12,8 +12,8 @@ class ceareaproductiva : public cempleado
 {
 public:
     ~ceareaproductiva();
-    ceareaproductiva(cempleado &e, eArea area);
-    ceareaproductiva(const char *nombre = "", int id = 0, eArea area = (eArea)0);
+//    ceareaproductiva(ceareaproductiva &e);
+    ceareaproductiva(const char *nombre = "", int dni = 0, int id = 0, eArea area = (eArea)0);
 
     void setCarro(shared_ptr<ccarro> carro);
 
@@ -22,6 +22,7 @@ public:
     double getTiempoDemora(){return m_tdemora;}
 public slots:
     void termina();
+
 private:
     shared_ptr<ccarro> m_carro;
     eArea m_area;

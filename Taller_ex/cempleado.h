@@ -11,7 +11,7 @@ class cempleado : public QObject
     Q_OBJECT
 
 public:
-    cempleado();
+    ~cempleado();
     cempleado(cempleado &e);
     cempleado(const char *nombre, int dni, int id);
 

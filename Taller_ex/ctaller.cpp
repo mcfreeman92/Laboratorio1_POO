@@ -36,6 +36,7 @@ string ctaller::tiempo_hora_actual()
 
 void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
 {
+    //se introduce un empleado por referencia
     //creo conexion para indicar que el empleado terminó su trabajo
     connect(empleado.get(),&ceareaproductiva::s_trabajo_terminado,[&]()
     {
@@ -50,7 +51,6 @@ void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
         }
         else
         {
-
             if(termine_trabajos())
             {
                 cout<<"generando reporte ..."<<endl;
@@ -59,15 +59,12 @@ void ctaller::insertar_empleado(shared_ptr<ceareaproductiva> &empleado)
                 m_tiempo_fin = tiempo_hora_actual();
                 generar_reporte();
                 exit(1);
-
-
-
-
             }
 
         }
 
     });
+    //se inserta el empleado en la lista de empleados del taller
     empleados.push_back(empleado);
 }
 
@@ -78,15 +75,11 @@ void ctaller::insertar_empleado(shared_ptr<ceareaservicio> &empleado)
 
 bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
 {
-
-    // inserto un carro si no existe en la lista
     auto it = find(carros.cbegin(),carros.cend(),carro);
     if(it == carros.end())
     {
         carros.push_back(carro);
     }
-    //-----------------------------------
-
 
     if(!disponibilidad_trabajos(carro))
     {
@@ -105,7 +98,6 @@ bool ctaller::insertar_carro(shared_ptr<ccarro> &carro)
         inicia_trabajos(carro);
         return true;
     }
-
 }
 
 bool ctaller::eliminar_empleado(int id)
@@ -163,12 +155,12 @@ void ctaller::muestra_tiempo_area_mas_demorada()
         if(typeid(*e) == typeid(ceareaproductiva))
         {
             ceareaproductiva *eap = (ceareaproductiva*)e.get();
-            cout<<"area demorada "<< eap->getTiempoDemora()<<" area "<<eap->getArea()<<endl;
+//            cout<<"area demorada "<< eap->getTiempoDemora()<<" area "<<eap->getArea()<<endl;
             if((eap->getTiempoDemora() > eAux->getTiempoDemora()))
                 eAux = eap;
         }
     }
-    cout<<" esta es el  area mas demorada "<< eAux->getTiempoDemora()<<" area "<<eAux->getArea()<<endl;
+    cout<<"el area mas demorada es "<<areaToStr(eAux->getArea())<<" con "<< eAux->getTiempoDemora()<<"ms "<<endl;
 }
 
 bool ctaller::eliminar_carro_espera(const char *matricula)
@@ -178,13 +170,13 @@ bool ctaller::eliminar_carro_espera(const char *matricula)
         if(*carro->getMatricula() == *matricula)
         {
             carro.reset();
-            areaEspera.erase(it);
-            cout <<"carro "<<matricula<< " eliminado OK"<<endl;
+            areaEspera.erase(it);            
+            cout <<"carro "<<matricula<< " eliminado exitoso"<<endl;
             muestra_carros_espera();
             return true;
         }
     }
-    cout <<"carro "<<matricula<< " eliminado BAD"<<endl;
+    cout <<"carro "<<matricula<< " eliminado fallido"<<endl;
     return false;
 }
 

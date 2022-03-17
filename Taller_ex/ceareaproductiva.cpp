@@ -5,18 +5,17 @@ ceareaproductiva::~ceareaproductiva()
     cout <<"empleado "<<getNombre()<<" destruido"<<endl;
 }
 
-ceareaproductiva::ceareaproductiva(cempleado &e, eArea area)
-{
-    ceareaproductiva(e.getNombre(),e.getDNI(),m_area);
-}
+//ceareaproductiva::ceareaproductiva(ceareaproductiva &e)
+//{
+//    ceareaproductiva(e.getNombre(),e.getDNI(),e.getId(),e.getArea());
+//}
 
-ceareaproductiva::ceareaproductiva(const char *nombre, int id, eArea area):
+ceareaproductiva::ceareaproductiva(const char *nombre, int dni, int id, eArea area):
+   cempleado(nombre,dni,id),
     m_carro(nullptr),
     m_area(area),
     m_tdemora(0)
 {
-    setDNI(id);
-    setNombre(nombre);
     cout <<"creado empleado "<<getNombre()<< " area productiva"<<endl;
 }
 

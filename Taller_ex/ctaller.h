@@ -10,6 +10,8 @@
 #include <iomanip> // put_time
 #include "ceareaproductiva.h"
 #include "ceareaservicio.h"
+#include "crepocarro.h"
+#include "crepoempareapro.h"
 
 using namespace std;
 

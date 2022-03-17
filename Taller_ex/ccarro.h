@@ -19,7 +19,7 @@ enum eArea
 class ccarro
 {
 public:
-    ccarro(ccarro *);
+    ccarro(ccarro &);
     ccarro(const char *matricula = "", int anno = 0, const std::vector<eArea> &areas = {}, int id = 0);
     ~ccarro();
 
