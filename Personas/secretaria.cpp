@@ -2,17 +2,13 @@
 
 cSecretaria::cSecretaria() : m_filename("empleados.rep")
 {
-    if(m_repProfe.existe())
-    {
-       std::list<shared_ptr<cProfesor>> lista_prof = m_repProfe.leerTodo();
-       for(auto p:lista_prof)
-           insertar_persona(p);
-    }
+
 }
 
 void cSecretaria::insertar_persona(shared_ptr<cProfesor> &profesor)
 {
     personas.push_back(profesor);
+    m_repProfe.insertar(profesor);
 }
 
 void cSecretaria::insertar_persona(shared_ptr<cEstudiante> &estudiante)
@@ -50,6 +46,12 @@ void cSecretaria::modifica_persona(int id)
             cout<<"cambiar edad("<<p->getEdad()<<"): "<<endl;
             cin>>edad;
             p->setEdad(edad);
+            if(typeid(*p) == typeid(cProfesor))
+            {
+                cProfesor *p_aux = (cProfesor*)p.get();
+                shared_ptr<cProfesor> aux_ptr = make_shared<cProfesor>(*p_aux);
+                m_repProfe.modificar(aux_ptr);
+            }
         }
     }
 }
@@ -77,6 +79,9 @@ bool cSecretaria::asignarEstudianteTutor()
                             cProfesor *p_aux = (cProfesor*)p.get();
                             cEstudiante *e_aux = (cEstudiante*)e.get();
                             p_aux->setEstudiante(make_shared<cEstudiante>(*e_aux));
+
+                            shared_ptr<cProfesor> aux_ptr = make_shared<cProfesor>(*p_aux);
+                            m_repProfe.modificar(aux_ptr);
                             return true;
                         }
                     }

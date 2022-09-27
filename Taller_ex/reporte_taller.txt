@@ -1,24 +1,24 @@
  <<<< Reporte del Taller: bartolete >>>>
 
- Inicio de trabajos: 2022-03-17 03:54:03
+ Inicio de trabajos: 2022-03-17 11:51:22
 
 |------- Empleados -------|
 Total de empleados: 3
 1 -> pintor
-Area pintura tiempo mas malo 5020
+Area pintura tiempo mas malo 5008
 2 -> electrico
-Area electronica tiempo mas malo 4998
+Area electronica tiempo mas malo 4996
 4 -> mecanico
-Area mecanica tiempo mas malo 4998
+Area mecanica tiempo mas malo 4996
 
 
 |------- Carros -------|
 Total de Carros: 3
 B12345ã -> 2019 ( mecanica pintura electronica ) 
-Tiempo total en taller: 15003
+Tiempo total en taller: 15037
 P22344ä -> 2020 ( pintura electronica ) 
-Tiempo total en taller: 10040
+Tiempo total en taller: 10013
 P44322È -> 1992 ( mecanica electronica ) 
-Tiempo total en taller: 9996
+Tiempo total en taller: 9994
 
- Fin de trabajos: 2022-03-17 03:54:18
+ Fin de trabajos: 2022-03-17 11:51:37
